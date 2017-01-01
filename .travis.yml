@@ -3,4 +3,4 @@ jdk:
   - oraclejdk8
 script: mvn clean verify
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t a35e53f4-22ca-4e42-af6e-1ab72e9ba296
