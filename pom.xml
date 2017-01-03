@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.valfridsson</groupId>
-    <artifactId>guestbook</artifactId>
+    <artifactId>gastolibro</artifactId>
     <version>1.0</version>
 
     <dependencies>
@@ -33,7 +33,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.193</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -82,7 +81,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.example.helloworld.HelloWorldApplication</mainClass>
+                                    <mainClass>net.valfridsson.guestbook.GuestBookApplication</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -111,6 +110,18 @@
                         <format>xml</format>
                     </formats>
                     <check />
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>1.1.2</version>
+                <configuration>
+                    <appName>gastolibro</appName>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar target/gastolibro-${project.version}.jar server target/classes/gastolibro.yml
+                        </web>
+                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>
