@@ -1,4 +1,4 @@
-package net.valfridsson.guestbook;
+package net.valfridsson.gastolibro;
 
 import io.dropwizard.Application;
 import io.dropwizard.db.PooledDataSourceFactory;
@@ -7,36 +7,36 @@ import io.dropwizard.jdbi.bundles.DBIExceptionsBundle;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import net.valfridsson.guestbook.health.SimpleHealthCheck;
-import net.valfridsson.guestbook.resources.HelloWorldResource;
+import net.valfridsson.gastolibro.health.SimpleHealthCheck;
+import net.valfridsson.gastolibro.resources.HelloWorldResource;
 import org.skife.jdbi.v2.DBI;
 
-public class GuestBookApplication extends Application<GuestBookConfiguration> {
+public class GastolibroApplication extends Application<GastolibroConfiguration> {
 
     private DBI jdbi;
 
     public static void main(String... args) throws Exception {
-        new GuestBookApplication().run(args);
+        new GastolibroApplication().run(args);
     }
 
     @Override
     public String getName() {
-        return "guest-book";
+        return "gastolibro";
     }
 
     @Override
-    public void initialize(Bootstrap<GuestBookConfiguration> bootstrap) {
+    public void initialize(Bootstrap<GastolibroConfiguration> bootstrap) {
         bootstrap.addBundle(new DBIExceptionsBundle());
-        bootstrap.addBundle(new MigrationsBundle<GuestBookConfiguration>() {
+        bootstrap.addBundle(new MigrationsBundle<GastolibroConfiguration>() {
             @Override
-            public PooledDataSourceFactory getDataSourceFactory(GuestBookConfiguration configuration) {
+            public PooledDataSourceFactory getDataSourceFactory(GastolibroConfiguration configuration) {
                 return configuration.database;
             }
         });
     }
 
     @Override
-    public void run(GuestBookConfiguration configuration, Environment environment) {
+    public void run(GastolibroConfiguration configuration, Environment environment) {
         jdbi = new DBIFactory().build(environment, configuration.database, getName());
         environment.healthChecks().register("simple", new SimpleHealthCheck());
         environment.jersey().register(new HelloWorldResource());

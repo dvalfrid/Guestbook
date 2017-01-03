@@ -1,4 +1,4 @@
-package net.valfridsson.guestbook.resources;
+package net.valfridsson.gastolibro.resources;
 
 import com.google.common.collect.ImmutableList;
 

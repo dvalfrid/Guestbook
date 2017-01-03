@@ -1,4 +1,4 @@
-package net.valfridsson.guestbook.resources;
+package net.valfridsson.gastolibro.resources;
 
 import io.dropwizard.testing.junit.ResourceTestRule;
 import org.junit.Assert;
