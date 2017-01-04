@@ -35,9 +35,15 @@
             <version>1.0.5</version>
         </dependency>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1208</version>
+        </dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.193</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

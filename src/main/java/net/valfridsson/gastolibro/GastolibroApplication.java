@@ -2,6 +2,7 @@ package net.valfridsson.gastolibro;
 
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.jdbi.bundles.DBIExceptionsBundle;
@@ -30,7 +31,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
         bootstrap.addBundle(new MigrationsBundle<GastolibroConfiguration>() {
             @Override
             public PooledDataSourceFactory getDataSourceFactory(GastolibroConfiguration configuration) {
-                return configuration.database;
+                return configuration.getDatabase();
             }
         });
         bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
@@ -38,7 +39,8 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
 
     @Override
     public void run(GastolibroConfiguration configuration, Environment environment) {
-        jdbi = new DBIFactory().build(environment, configuration.database, getName());
+        DataSourceFactory factory = configuration.getDatabase();
+        jdbi = new DBIFactory().build(environment, factory, factory.getUrl());
         environment.healthChecks().register("simple", new SimpleHealthCheck());
         environment.jersey().register(new HelloWorldResource());
     }
