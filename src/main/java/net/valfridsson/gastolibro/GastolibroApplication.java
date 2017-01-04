@@ -41,7 +41,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
     public void run(GastolibroConfiguration configuration, Environment environment) {
         DataSourceFactory factory = configuration.getDatabase();
         jdbi = new DBIFactory().build(environment, factory, factory.getUrl());
-        environment.healthChecks().register("simple", new SimpleHealthCheck());
+        environment.healthChecks().register("gastolibro", new SimpleHealthCheck());
         environment.jersey().register(new HelloWorldResource());
     }
 
