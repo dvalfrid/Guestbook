@@ -1,4 +1,4 @@
-package net.valfridsson.guestbook.health;
+package net.valfridsson.gastolibro.health;
 
 import com.codahale.metrics.health.HealthCheck;
 
