@@ -1,11 +1,13 @@
 package net.valfridsson.gastolibro.resources;
 
+import com.google.common.collect.ImmutableMap;
 import io.dropwizard.testing.FixtureHelpers;
 import io.dropwizard.testing.junit.ResourceTestRule;
 import net.valfridsson.gastolibro.GastolibroApplication;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
 import net.valfridsson.gastolibro.jdbi.EntryDaoTest;
 import net.valfridsson.gastolibro.jdbi.TestDB;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -13,9 +15,12 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.skyscreamer.jsonassert.JSONAssert;
 
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -56,5 +61,19 @@ public class BookResourceTest {
     public void findAll_bookDoesNotExist() {
         Response response = resources.client().target("/books/0/entries").request().get();
         assertEquals(response.getStatus(), 404);
+    }
+
+    @Test
+    public void insert() throws Exception {
+        ImmutableMap.Builder<String, Object> builder = new ImmutableMap.Builder<>();
+        builder.put("name", "Test Testsson");
+        builder.put("headline", "headline");
+        builder.put("email", "test@testsson.se");
+        builder.put("city", "city");
+        builder.put("country", "country");
+        builder.put("message", "message");
+
+        Response response = resources.client().target("/books/10/entries").request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(builder.build()));
+        Assertions.assertThat(response.getStatus()).isEqualTo(201);
     }
 }

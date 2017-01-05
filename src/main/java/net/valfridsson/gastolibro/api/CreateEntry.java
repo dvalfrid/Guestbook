@@ -2,6 +2,8 @@ package net.valfridsson.gastolibro.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
@@ -26,12 +28,17 @@ public class CreateEntry {
                        @JsonProperty("email") String email,
                        @JsonProperty("city") String city,
                        @JsonProperty("country") String country,
-                       @JsonProperty("message") String msg) {
+                       @JsonProperty("message") String message) {
         this.name = name;
         this.headline = headline;
         this.email = email;
         this.city = city;
         this.country = country;
-        this.message = msg;
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
     }
 }
