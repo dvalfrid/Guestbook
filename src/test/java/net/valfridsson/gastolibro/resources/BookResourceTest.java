@@ -50,7 +50,11 @@ public class BookResourceTest {
         Response response = resources.client().target("/books/10/entries").request().get();
         assertEquals(response.getStatus(), 200);
         JSONAssert.assertEquals(FixtureHelpers.fixture("fixtures/bookFindAll.json"), response.readEntity(String.class), false);
+    }
 
-
+    @Test
+    public void findAll_bookDoesNotExist() {
+        Response response = resources.client().target("/books/0/entries").request().get();
+        assertEquals(response.getStatus(), 404);
     }
 }
