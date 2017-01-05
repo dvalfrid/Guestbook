@@ -46,7 +46,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
         environment.jersey().register(new HelloWorldResource());
         environment.jersey().register(new BookResource(this));
     }
-ª
+
     public DBI getDbi() {
         return jdbi;
     }
