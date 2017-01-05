@@ -149,7 +149,7 @@
                 <configuration>
                     <appName>gastolibro</appName>
                     <processTypes>
-                        <web>java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar target/gastolibro-${project.version}.jar server target/classes/gastolibro.yml
+                        <web>java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar target/gastolibro-${project.version}.jar db migrate target/classes/gastolibro.yml &amp;&amp; java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar target/gastolibro-${project.version}.jar server target/classes/gastolibro.yml
                         </web>
                     </processTypes>
                 </configuration>
