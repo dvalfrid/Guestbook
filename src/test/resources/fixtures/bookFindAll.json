@@ -1,7 +1,7 @@
 {
   "book": {
     "id": 10,
-    "name": "Test GuestBook",
+    "name": "Test Book",
     "viewAble": true
   },
   "entries": [

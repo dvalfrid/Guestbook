@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class GuestBookResourceTest {
+public class BookResourceTest {
 
     @Rule
     public TestDB testDB = new TestDB();
@@ -34,7 +34,7 @@ public class GuestBookResourceTest {
 
     @ClassRule
     public static final ResourceTestRule resources = ResourceTestRule.builder()
-        .addResource(new GuestBookResource(application))
+        .addResource(new BookResource(application))
         .build();
 
     @Test

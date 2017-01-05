@@ -17,14 +17,13 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@SuppressWarnings("WeakerAccess")
 @RegisterMapper(EntryDao.EntryMapper.class)
 public abstract class EntryDao implements GetHandle {
 
-    @SqlQuery("SELECT * FROM entry e WHERE e.guestBookId = :guestBookId ORDER BY e.createTime DESC")
-    public abstract ImmutableList<Entry> findAll(@Bind("guestBookId") long guestBookId);
+    @SqlQuery("SELECT * FROM entry e WHERE e.bookId = :bookId ORDER BY e.createTime DESC")
+    public abstract ImmutableList<Entry> findAll(@Bind("bookId") long bookId);
 
-    public Entry insert(CreateEntry createEntry, long guestBookId, String ip) {
+    public Entry insert(CreateEntry createEntry, long bookId, String ip) {
         return getHandle().inTransaction((conn, status) -> {
             long id = nextId();
             doInsert(Entry.newBuilder()
@@ -38,7 +37,7 @@ public abstract class EntryDao implements GetHandle {
                 .ip(ip)
                 .viewAble(true)
                 .createTime(LocalDateTime.now())
-                .build(), guestBookId);
+                .build(), bookId);
             return findById(id).orElse(null);
         });
     }
@@ -50,9 +49,9 @@ public abstract class EntryDao implements GetHandle {
     @SqlQuery("SELECT * FROM entry WHERE id = :id")
     abstract Optional<Entry> findById(@Bind("id") long id);
 
-    @SqlUpdate("INSERT INTO entry (id,name,ip,headline,email,city,country,message,createTime,viewAble,guestBookId) " +
-        "values (:e.id,:e.name,:e.ip,:e.headline,:e.email,:e.city,:e.country,:e.message,:e.createTime,:e.viewAble,:guestBookId)")
-    abstract void doInsert(@BindFields("e") Entry entry, @Bind("guestBookId") long guestBookId);
+    @SqlUpdate("INSERT INTO entry (id,name,ip,headline,email,city,country,message,createTime,viewAble,bookId) " +
+        "values (:e.id,:e.name,:e.ip,:e.headline,:e.email,:e.city,:e.country,:e.message,:e.createTime,:e.viewAble,:bookId)")
+    abstract void doInsert(@BindFields("e") Entry entry, @Bind("bookId") long bookId);
 
     public static class EntryMapper implements ResultSetMapper<Entry> {
 

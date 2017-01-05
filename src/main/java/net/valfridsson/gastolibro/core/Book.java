@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @SuppressWarnings({"WeakerAccess", "EqualsWhichDoesntCheckParameterClass"})
-public class GuestBook {
+public class Book {
 
     @JsonProperty("id")
     public final long id;
@@ -14,7 +14,7 @@ public class GuestBook {
     @JsonProperty("viewAble")
     public final boolean viewAble;
 
-    public GuestBook(long id, String name, boolean viewAble) {
+    public Book(long id, String name, boolean viewAble) {
         this.id = id;
         this.name = name;
         this.viewAble = viewAble;
