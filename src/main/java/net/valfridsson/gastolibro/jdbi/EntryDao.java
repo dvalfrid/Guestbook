@@ -21,8 +21,8 @@ import java.util.Optional;
 @RegisterMapper(EntryDao.EntryMapper.class)
 public abstract class EntryDao implements GetHandle {
 
-    @SqlQuery("SELECT * FROM entry e ORDER BY e.createTime DESC")
-    public abstract ImmutableList<Entry> findAll();
+    @SqlQuery("SELECT * FROM entry e WHERE e.guestBookId = :guestBookId ORDER BY e.createTime DESC")
+    public abstract ImmutableList<Entry> findAll(@Bind("guestBookId") long guestBookId);
 
     public Entry insert(CreateEntry createEntry, long guestBookId, String ip) {
         return getHandle().inTransaction((conn, status) -> {

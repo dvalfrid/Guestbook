@@ -10,6 +10,7 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import net.valfridsson.gastolibro.health.SimpleHealthCheck;
+import net.valfridsson.gastolibro.resources.GuestBookResource;
 import net.valfridsson.gastolibro.resources.HelloWorldResource;
 import org.skife.jdbi.v2.DBI;
 
@@ -43,6 +44,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
         jdbi = new DBIFactory().build(environment, factory, factory.getUrl());
         environment.healthChecks().register("gastolibro", new SimpleHealthCheck());
         environment.jersey().register(new HelloWorldResource());
+        environment.jersey().register(new GuestBookResource(this));
     }
 
     public DBI getDbi() {

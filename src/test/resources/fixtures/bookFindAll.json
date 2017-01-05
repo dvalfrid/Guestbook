@@ -1,0 +1,69 @@
+{
+  "book": {
+    "id": 10,
+    "name": "Test GuestBook",
+    "viewAble": true
+  },
+  "entries": [
+    {
+      "viewAble": true,
+      "name": "name",
+      "ip": "127.0.0.1",
+      "headline": "headline",
+      "email": "name@mail.com",
+      "city": "city",
+      "country": "country",
+      "message": "message"
+    },
+    {
+      "viewAble": true,
+      "name": "name",
+      "ip": "127.0.0.1",
+      "headline": "headline",
+      "email": "name@mail.com",
+      "city": "city",
+      "country": "country",
+      "message": "message"
+    },
+    {
+      "viewAble": true,
+      "name": "name",
+      "ip": "127.0.0.1",
+      "headline": "headline",
+      "email": "name@mail.com",
+      "city": "city",
+      "country": "country",
+      "message": "message"
+    },
+    {
+      "viewAble": true,
+      "name": "name",
+      "ip": "127.0.0.1",
+      "headline": "headline",
+      "email": "name@mail.com",
+      "city": "city",
+      "country": "country",
+      "message": "message"
+    },
+    {
+      "viewAble": true,
+      "name": "name",
+      "ip": "127.0.0.1",
+      "headline": "headline",
+      "email": "name@mail.com",
+      "city": "city",
+      "country": "country",
+      "message": "message"
+    },
+    {
+      "viewAble": true,
+      "name": "name",
+      "ip": "127.0.0.1",
+      "headline": "headline",
+      "email": "name@mail.com",
+      "city": "city",
+      "country": "country",
+      "message": "message"
+    }
+  ]
+}

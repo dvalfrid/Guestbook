@@ -21,17 +21,17 @@ public class EntryDaoTest {
 
     @Test
     public void findAll() throws Exception {
-        Entry entry1 = entryDao.insert(getCreateEntry(), 1L, "192.168.10.10");
-        Entry entry2 = entryDao.insert(getCreateEntry(), 1L, "192.168.10.10");
-        Entry entry3 = entryDao.insert(getCreateEntry(), 1L, "192.168.10.10");
-        Entry entry4 = entryDao.insert(getCreateEntry(), 1L, "192.168.10.10");
+        Entry entry1 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        Entry entry2 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        Entry entry3 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        Entry entry4 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
 
-        assertThat(entryDao.findAll()).containsOnly(entry1, entry2, entry3, entry4);
+        assertThat(entryDao.findAll(10)).containsOnly(entry1, entry2, entry3, entry4);
     }
 
     @Test
     public void insert() throws Exception {
-        Entry insert = entryDao.insert(getCreateEntry(), 1L, "192.168.10.10");
+        Entry insert = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
         assertThat(insert.ip).isEqualTo("192.168.10.10");
     }
 
@@ -40,7 +40,7 @@ public class EntryDaoTest {
         assertThat(entryDao.nextId()).isPositive();
     }
 
-    private CreateEntry getCreateEntry() {
+    public static CreateEntry getCreateEntry() {
         return new CreateEntry("name", "headline", "name@mail.com", "city", "country", "message");
     }
 }
