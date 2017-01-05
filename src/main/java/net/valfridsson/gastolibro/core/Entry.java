@@ -1,16 +1,30 @@
 package net.valfridsson.gastolibro.core;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.time.LocalDateTime;
 
+@SuppressWarnings("WeakerAccess")
 public class Entry {
+    @JsonProperty("id")
     public final long id;
+    @JsonProperty("name")
     public final String name;
+    @JsonProperty("ip")
     public final String ip;
+    @JsonProperty("headline")
     public final String headline;
+    @JsonProperty("email")
     public final String email;
+    @JsonProperty("city")
     public final String city;
+    @JsonProperty("country")
     public final String country;
+    @JsonProperty("message")
     public final String message;
+    @JsonProperty("createTime")
     public final LocalDateTime createTime;
     public final boolean viewAble;
 
@@ -27,22 +41,19 @@ public class Entry {
         this.viewAble = builder.viewAble;
     }
 
-    public static Builder newBuilder() {
-        return new Builder();
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    @Override
+    public boolean equals(Object o) {
+       return EqualsBuilder.reflectionEquals(this, o);
     }
 
-    public static Builder builder(Entry entry) {
-        return newBuilder()
-            .id(entry.id)
-            .name(entry.name)
-            .ip(entry.ip)
-            .headline(entry.headline)
-            .email(entry.email)
-            .city(entry.city)
-            .country(entry.country)
-            .message(entry.message)
-            .createTime(entry.createTime)
-            .viewAble(entry.viewAble);
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
     }
 
     public static class Builder {

@@ -53,6 +53,9 @@
             <column name="email" type="varchar">
                 <constraints nullable="false"/>
             </column>
+            <column name="ip" type="varchar">
+                <constraints nullable="false"/>
+            </column>
             <column name="createTime" type="timestamp">
                 <constraints nullable="false"/>
             </column>
