@@ -73,4 +73,13 @@
             <column name="createTime"/>
         </createIndex>
     </changeSet>
+
+    <changeSet id="003-adding-test-guestbook" author="dvalfrid">
+        <insert tableName="guestBook">
+            <column name="id" value="10" />
+            <column name="name" value="Test GuestBook"/>
+            <column name="viewAble" value="true"/>
+            <column name="createTime" value="now()"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
