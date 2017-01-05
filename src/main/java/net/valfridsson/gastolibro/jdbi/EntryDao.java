@@ -20,7 +20,7 @@ import java.util.Optional;
 @RegisterMapper(EntryDao.EntryMapper.class)
 public abstract class EntryDao implements GetHandle {
 
-    @SqlQuery("SELECT * FROM entry e WHERE e.bookId = :bookId ORDER BY e.createTime DESC")
+    @SqlQuery("SELECT * FROM entry e WHERE e.book_id = :bookId ORDER BY e.create_time DESC")
     public abstract ImmutableList<Entry> findAll(@Bind("bookId") long bookId);
 
     public Entry insert(CreateEntry createEntry, long bookId, String ip) {
@@ -42,14 +42,14 @@ public abstract class EntryDao implements GetHandle {
         });
     }
 
-    @SqlQuery("SELECT nextval('entrySequence')")
+    @SqlQuery("SELECT nextval('entry_sequence')")
     abstract long nextId();
 
     @SingleValueResult
     @SqlQuery("SELECT * FROM entry WHERE id = :id")
     abstract Optional<Entry> findById(@Bind("id") long id);
 
-    @SqlUpdate("INSERT INTO entry (id,name,ip,headline,email,city,country,message,createTime,viewAble,bookId) " +
+    @SqlUpdate("INSERT INTO entry (id,name,ip,headline,email,city,country,message,create_time,view_able,book_id) " +
         "values (:e.id,:e.name,:e.ip,:e.headline,:e.email,:e.city,:e.country,:e.message,:e.createTime,:e.viewAble,:bookId)")
     abstract void doInsert(@BindFields("e") Entry entry, @Bind("bookId") long bookId);
 
@@ -66,8 +66,8 @@ public abstract class EntryDao implements GetHandle {
                 .city(rs.getString("city"))
                 .country(rs.getString("country"))
                 .message(rs.getString("message"))
-                .createTime(rs.getTimestamp("createTime").toLocalDateTime())
-                .viewAble(rs.getBoolean("viewAble"))
+                .createTime(rs.getTimestamp("create_time").toLocalDateTime())
+                .viewAble(rs.getBoolean("view_able"))
                 .build();
         }
     }

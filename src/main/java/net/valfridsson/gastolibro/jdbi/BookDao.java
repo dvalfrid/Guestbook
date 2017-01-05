@@ -24,7 +24,7 @@ public abstract class BookDao implements GetHandle {
 
         @Override
         public Book map(int index, ResultSet rs, StatementContext ctx) throws SQLException {
-            return new Book(rs.getLong("id"), rs.getString("name"), rs.getBoolean("viewAble"));
+            return new Book(rs.getLong("id"), rs.getString("name"), rs.getBoolean("view_able"));
         }
     }
 }

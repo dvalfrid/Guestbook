@@ -7,7 +7,7 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="001-createBookTable" author="dvalfrid">
-        <createSequence sequenceName="bookSequence" startValue="100"/>
+        <createSequence sequenceName="book_sequence" startValue="100"/>
 
         <createTable tableName="book">
             <column name="id" type="number">
@@ -16,10 +16,10 @@
             <column name="name" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="createTime" type="timestamp">
+            <column name="create_time" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="viewAble" type="boolean">
+            <column name="view_able" type="boolean">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -29,7 +29,7 @@
     </changeSet>
 
     <changeSet id="002-createEntryTable" author="dvalfrid">
-        <createSequence sequenceName="entrySequence" startValue="1"/>
+        <createSequence sequenceName="entry_sequence" startValue="1"/>
 
         <createTable tableName="entry">
             <column name="id" type="number">
@@ -56,21 +56,21 @@
             <column name="ip" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="createTime" type="timestamp">
+            <column name="create_time" type="timestamp">
                 <constraints nullable="false"/>
             </column>
-            <column name="viewAble" type="boolean">
+            <column name="view_able" type="boolean">
                 <constraints nullable="false"/>
             </column>
-            <column name="bookId" type="number">
+            <column name="book_id" type="number">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addPrimaryKey tableName="entry" columnNames="id"/>
 
-        <createIndex tableName="entry" indexName="entryCreateTimeIndex">
-            <column name="createTime"/>
+        <createIndex tableName="entry" indexName="entry_create_time_index">
+            <column name="create_time"/>
         </createIndex>
     </changeSet>
 
@@ -78,8 +78,8 @@
         <insert tableName="book">
             <column name="id" value="10" />
             <column name="name" value="Test Book"/>
-            <column name="viewAble" value="true"/>
-            <column name="createTime" value="now()"/>
+            <column name="view_able" value="true"/>
+            <column name="create_time" value="now()"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
