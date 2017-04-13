@@ -1,6 +1,7 @@
 package net.valfridsson.gastolibro;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.jdbi.DBIFactory;
@@ -33,6 +34,8 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
                 return configuration.getDatabase();
             }
         });
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
+
     }
 
     @Override
