@@ -39,17 +39,13 @@ public class BookResource {
     public Response findAll(@PathParam("id") LongParam id) {
         return logException(() -> {
             Optional<Book> book = application.getDbi().onDemand(BookDao.class).findById(id.get());
-            if (book.isPresent()) {
-                return Response.ok(ImmutableMap.of(
-                    "book", book.get(),
+            return book.map(book1 -> Response.ok(ImmutableMap.of(
+                    "book", book1,
                     "entries", application.getDbi().onDemand(EntryDao.class).findAll(id.get())
-                )).build();
-            } else {
-                return Response.status(404).entity(ImmutableMap.of(
+            )).build()).orElseGet(() -> Response.status(404).entity(ImmutableMap.of(
                     "entity", "book",
                     "id", id.get()
-                )).build();
-            }
+            )).build());
         }, String.format("Calling findAll(%s)", id.get()));
     }
 
