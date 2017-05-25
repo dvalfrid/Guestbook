@@ -8,6 +8,7 @@ import net.valfridsson.gastolibro.core.Book;
 import net.valfridsson.gastolibro.core.Entry;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 public class ModelsTest {
 
@@ -46,8 +47,7 @@ public class ModelsTest {
           .pack());
 
 
-  
-    System.err.println(html);
+    assertNotNull(html);
   }
 }
 
