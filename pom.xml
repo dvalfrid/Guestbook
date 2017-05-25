@@ -93,6 +93,11 @@
             <version>3.6.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>de.neuland-bfi</groupId>
+            <artifactId>jade4j</artifactId>
+            <version>1.2.5</version>
+        </dependency>
     </dependencies>
 
     <build>
