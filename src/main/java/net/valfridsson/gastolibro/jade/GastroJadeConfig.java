@@ -4,10 +4,16 @@ import java.io.File;
 public class GastroJadeConfig {
   
   public final String mainTemplateAbsolutePath;  
+  public final String ENTRYKEY = "entries";
+  public final String BOOKSKEY = "books";
 
   private GastroJadeConfig() {
-    this.mainTemplateAbsolutePath = (new File(GastroJadeConfig.class.getClassLoader().getResource("assets/main.jade").getFile())).getAbsolutePath();
-
+    this.mainTemplateAbsolutePath = (new File(GastroJadeConfig
+          .class
+          .getClassLoader()
+          .getResource("assets/main.jade")
+          .getFile()))
+      .getAbsolutePath();
   }
 
   public static GastroJadeConfig getInstance() {

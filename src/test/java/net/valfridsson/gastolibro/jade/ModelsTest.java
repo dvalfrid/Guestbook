@@ -15,8 +15,6 @@ public class ModelsTest {
   @Test
   public void kalle() throws IOException {
 
-    Models models = new Models(true);
-
     ImmutableList<Entry> entry = ImmutableList
       .<Entry>builder()
       .add(Entry.newBuilder()
@@ -40,11 +38,11 @@ public class ModelsTest {
     File file = new File(ModelsTest.class.getClassLoader().getResource("assets/main.jade").getFile());
 
 
-    String html = models
-      .updateModel(file.getAbsolutePath(), models.populateModel()
-          .updateEntries(entry)
-          .updateBooks(book)
-          .pack());
+    String html = Models.buildModel
+      (file.getAbsolutePath())
+      .data(GastroJadeConfig.getInstance().ENTRYKEY, entry)
+      .data(GastroJadeConfig.getInstance().BOOKSKEY, book)
+      .render();
 
 
     assertNotNull(html);
