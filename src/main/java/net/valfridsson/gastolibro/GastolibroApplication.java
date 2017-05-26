@@ -11,6 +11,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import net.valfridsson.gastolibro.health.SimpleHealthCheck;
 import net.valfridsson.gastolibro.resources.BookResource;
+import net.valfridsson.gastolibro.resources.LandingPageResource;
 import org.skife.jdbi.v2.DBI;
 
 public class GastolibroApplication extends Application<GastolibroConfiguration> {
@@ -34,8 +35,6 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
                 return configuration.getDatabase();
             }
         });
-        bootstrap.addBundle(new AssetsBundle("/assets/", "/"));
-
     }
 
     @Override
@@ -44,6 +43,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
         jdbi = new DBIFactory().build(environment, factory, factory.getUrl());
         environment.healthChecks().register("gastolibro", new SimpleHealthCheck());
         environment.jersey().register(new BookResource(this));
+        environment.jersey().register(new LandingPageResource(this));
     }
 
     public DBI getDbi() {

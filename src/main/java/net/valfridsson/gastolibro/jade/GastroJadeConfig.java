@@ -11,7 +11,7 @@ public class GastroJadeConfig {
     this.mainTemplateAbsolutePath = (new File(GastroJadeConfig
           .class
           .getClassLoader()
-          .getResource("assets/main.jade")
+          .getResource("main.jade")
           .getFile()))
       .getAbsolutePath();
   }

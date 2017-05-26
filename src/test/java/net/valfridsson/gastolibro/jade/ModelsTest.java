@@ -35,7 +35,7 @@ public class ModelsTest {
       .add(new Book(103, "Smith", true))
       .build(); 
 
-    File file = new File(ModelsTest.class.getClassLoader().getResource("assets/main.jade").getFile());
+    File file = new File(ModelsTest.class.getClassLoader().getResource("main.jade").getFile());
 
 
     String html = Models.buildModel
