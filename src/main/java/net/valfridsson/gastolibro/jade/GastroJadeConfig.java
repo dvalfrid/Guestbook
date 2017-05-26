@@ -1,28 +1,21 @@
 package net.valfridsson.gastolibro.jade;
 
-import java.io.File;
 public class GastroJadeConfig {
-  
-  public final String mainTemplateAbsolutePath;  
-  public final String ENTRYKEY = "entries";
-  public final String BOOKKEY = "book";
 
-  private GastroJadeConfig() {
-    this.mainTemplateAbsolutePath = (new File(GastroJadeConfig
-          .class
-          .getClassLoader()
-          .getResource("main.jade")
-          .getFile()))
-      .getAbsolutePath();
-  }
+    public final String mainTemplateAbsolutePath = "main.jade";
+    public final String ENTRYKEY = "entries";
+    public final String BOOKKEY = "book";
 
-  public static GastroJadeConfig getInstance() {
-    return GastroJadeConfigHolder.INSTANCE;
-  }
+    private GastroJadeConfig() {
+    }
 
-  private static class GastroJadeConfigHolder {
-    private static final GastroJadeConfig INSTANCE = new GastroJadeConfig();
-  }
+    public static GastroJadeConfig getInstance() {
+        return GastroJadeConfigHolder.INSTANCE;
+    }
+
+    private static class GastroJadeConfigHolder {
+        private static final GastroJadeConfig INSTANCE = new GastroJadeConfig();
+    }
 
 }
 

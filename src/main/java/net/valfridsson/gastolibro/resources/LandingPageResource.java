@@ -27,45 +27,20 @@ public class LandingPageResource {
 
     private final GastolibroApplication application;
 
-    private ImmutableList<Entry> entry;
-    private ImmutableList<Book> book;
-
     public LandingPageResource(GastolibroApplication application) {
         this.application = application;
-
-        this.entry = ImmutableList
-                .<Entry>builder()
-                .add(Entry.newBuilder()
-                        .id(103)
-                        .name("Smith")
-                        .ip("IPSmith")
-                        .headline("HeadlineSmith")
-                        .email("EmailSmith")
-                        .city("CitySmith")
-                        .country("CountrySmith")
-                        .message("MessageSmith")
-                        .viewAble(true)
-                        .build())
-                .build();
-
-
-        this.book = ImmutableList.<Book>builder()
-                .add(new Book(103, "Smith", true))
-                .build();
-
     }
 
 
     @GET
     public Response LoadLandingPage(@QueryParam("bookId") LongParam bookId) throws IOException {
-        Optional<Book> byId = application.getDbi().onDemand(BookDao.class).findById(bookId.get());
+        Optional<Book> byId = application.getDbi().onDemand(BookDao.class).findById(bookId != null ? bookId.get() : -1);
         if (byId.isPresent()) {
             Book book = byId.get();
             ImmutableList<Entry> entries = application.getDbi().onDemand(EntryDao.class).findAll(bookId.get());
-            // TODO Jonas
             return Response
                     .ok(Models.buildModel()
-                            .data(GastroJadeConfig.getInstance().ENTRYKEY,  entries)
+                            .data(GastroJadeConfig.getInstance().ENTRYKEY, entries)
                             .data(GastroJadeConfig.getInstance().BOOKKEY, book)
                             .render()
                     ).build();

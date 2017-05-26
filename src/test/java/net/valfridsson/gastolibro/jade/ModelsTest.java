@@ -33,11 +33,8 @@ public class ModelsTest {
  
    Book book = new Book(103, "Smith", true);
 
-    File file = new File(ModelsTest.class.getClassLoader().getResource("main.jade").getFile());
-
-
     String html = Models.buildModel
-      (file.getAbsolutePath())
+      ("main.jade")
       .data(GastroJadeConfig.getInstance().ENTRYKEY, entry)
       .data(GastroJadeConfig.getInstance().BOOKKEY, book)
       .render();
