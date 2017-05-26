@@ -31,9 +31,7 @@ public class ModelsTest {
           .build();
  
  
-   ImmutableList<Book> book = ImmutableList.<Book>builder()
-      .add(new Book(103, "Smith", true))
-      .build(); 
+   Book book = new Book(103, "Smith", true);
 
     File file = new File(ModelsTest.class.getClassLoader().getResource("main.jade").getFile());
 
@@ -41,7 +39,7 @@ public class ModelsTest {
     String html = Models.buildModel
       (file.getAbsolutePath())
       .data(GastroJadeConfig.getInstance().ENTRYKEY, entry)
-      .data(GastroJadeConfig.getInstance().BOOKSKEY, book)
+      .data(GastroJadeConfig.getInstance().BOOKKEY, book)
       .render();
 
 

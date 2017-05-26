@@ -65,8 +65,8 @@ public class LandingPageResource {
             // TODO Jonas
             return Response
                     .ok(Models.buildModel()
-                            .data(GastroJadeConfig.getInstance().ENTRYKEY, this.entry)
-                            .data(GastroJadeConfig.getInstance().BOOKSKEY, this.book)
+                            .data(GastroJadeConfig.getInstance().ENTRYKEY,  entries)
+                            .data(GastroJadeConfig.getInstance().BOOKKEY, book)
                             .render()
                     ).build();
         } else {

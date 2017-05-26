@@ -16,8 +16,7 @@ html
             for entry in entries
                 li name #{entry.name} headline #{entry.headline} email #{entry.email} city #{entry.city} country #{entry.country} message #{entry.message} 
         div(class="col-sm-5")
-          ol#books
-            for book in books
+          ol#book
               if book.viewAble
                 li name #{book.name} id #{book.id}
 

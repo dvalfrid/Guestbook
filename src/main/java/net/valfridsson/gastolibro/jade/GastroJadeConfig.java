@@ -5,7 +5,7 @@ public class GastroJadeConfig {
   
   public final String mainTemplateAbsolutePath;  
   public final String ENTRYKEY = "entries";
-  public final String BOOKSKEY = "books";
+  public final String BOOKKEY = "book";
 
   private GastroJadeConfig() {
     this.mainTemplateAbsolutePath = (new File(GastroJadeConfig
