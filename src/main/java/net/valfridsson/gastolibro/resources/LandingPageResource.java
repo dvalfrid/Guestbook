@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.Optional;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,7 +24,6 @@ import net.valfridsson.gastolibro.jdbi.BookDao;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
 
 @Path("/")
-@Produces(MediaType.TEXT_HTML)
 public class LandingPageResource {
 
     private final GastolibroApplication application;
@@ -33,6 +34,7 @@ public class LandingPageResource {
 
 
     @GET
+    @Produces(MediaType.TEXT_HTML)
     public Response LoadLandingPage(@QueryParam("bookId") LongParam bookId) throws IOException {
         Optional<Book> byId = application.getDbi().onDemand(BookDao.class).findById(bookId != null ? bookId.get() : -1);
         if (byId.isPresent()) {
@@ -47,5 +49,12 @@ public class LandingPageResource {
         } else {
             return Response.status(404).build();
         }
+    }
+
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void RecieveGastroLibroEntry(String entries) throws IOException {
+      System.out.println(entries);
     }
 }

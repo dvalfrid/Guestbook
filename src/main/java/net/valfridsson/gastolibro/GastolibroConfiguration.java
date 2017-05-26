@@ -1,12 +1,16 @@
 package net.valfridsson.gastolibro;
 
 import io.dropwizard.Configuration;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.sslreload.SslReloadBundle;
+
 import io.dropwizard.db.DataSourceFactory;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 @SuppressWarnings("WeakerAccess")
 public class GastolibroConfiguration extends Configuration {
