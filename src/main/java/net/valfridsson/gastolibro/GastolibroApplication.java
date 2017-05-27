@@ -37,6 +37,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
         });
 
         bootstrap.addBundle(new AssetsBundle("/assets/js", "/js", null, "js"));
+        bootstrap.addBundle(new AssetsBundle("/assets/css", "/css", null, "css"));
     }
 
     @Override

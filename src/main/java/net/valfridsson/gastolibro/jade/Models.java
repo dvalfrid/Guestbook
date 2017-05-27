@@ -8,15 +8,14 @@ import java.util.HashMap;
 
 public class Models {
 
-    private static final JadeConfiguration configuration = new JadeConfiguration();
+    private static final JadeConfiguration configuration;
 
     static {
-        configuration.setTemplateLoader(new ClasspathTemplateLoader());
+      configuration = new JadeConfiguration();
+      configuration.setCaching(true);
+      configuration.setPrettyPrint(false);
+      configuration.setTemplateLoader(new ClasspathTemplateLoader());
     }
-
-
-    private final HashMap<String, Object> model;
-    private final String template;
 
     public static Models buildModel(String jadeTemplateAbsolutePath, HashMap<String, Object> model) {
         return new Models(jadeTemplateAbsolutePath, model);
@@ -29,6 +28,14 @@ public class Models {
     public static Models buildModel() {
         return new Models();
     }
+
+    public static void clearCache() {
+      Models.configuration.clearCache();
+    }
+
+    private final HashMap<String, Object> model;
+    private final String template;
+
 
     public Models(String template, HashMap<String, Object> model) {
         this.template = template;
@@ -63,6 +70,5 @@ public class Models {
           .getTemplate(this.template),
           this.model);
   }
-
 }
 

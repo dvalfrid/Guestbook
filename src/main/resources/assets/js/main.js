@@ -11,15 +11,19 @@ function LoadEntries() {
 
   var json = JSON.stringify(str);
 
-  var xhr = new XMLHttpRequest();
-  xhr.open(document.getElementById('gastro-input').method,
-          document.getElementById('gastro-input').action);
-  xhr.setRequestHeader("Content-type", "application/json");
-  xhr.setRequestHeader("Content-Length",json.length);
-  xhr.setRequestHeader('Accept', 'application/json');
 
-
-  xhr.send(json);
-
+  $.ajax({
+  type : "POST",
+  url : "http://localhost:3000/",
+  contentType :"application/json; charSet=UTF-8",
+  data : json,
+  dataType : "json"
+      })
+  .done(function(data){
+      console.log(data);
+      })
+  .fail(function(data) {
+      console.log(data);
+      })
 
 }
