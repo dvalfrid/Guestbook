@@ -1,3 +1,20 @@
+
+var entriesOnDisplay;
+var oldestEntry;
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var elements = document.getElementById("entry-date").elements;
+
+  this.entriesOnDisplay = elements.size();
+  
+  for (var i = 0; i < elements.size(); i++) {
+    this.oldestEntry = Math.min(Date.parse(elements[i]));
+  }
+});
+
+
 function LoadEntries() {
   var elements = document.getElementById("gastro-input").elements;
   var str = {};
@@ -27,3 +44,6 @@ function LoadEntries() {
       })
 
 }
+
+
+

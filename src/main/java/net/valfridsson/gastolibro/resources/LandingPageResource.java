@@ -42,8 +42,8 @@ public class LandingPageResource {
             ImmutableList<Entry> entries = application.getDbi().onDemand(EntryDao.class).findAll(bookId.get());
             return Response
                     .ok(Models.buildModel()
-                            .data(GastroJadeConfig.getInstance().ENTRYKEY, entries)
-                            .data(GastroJadeConfig.getInstance().BOOKKEY, book)
+                            .data(GastroJadeConfig.getInstance().EntryKey, entries)
+                            .data(GastroJadeConfig.getInstance().BookKey, book)
                             .render()
                     ).build();
         } else {
@@ -53,8 +53,13 @@ public class LandingPageResource {
 
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void RecieveGastroLibroEntry(String entries) throws IOException {
-      System.out.println(entries);
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response RecieveGastroLibroEntry(Entry entry) throws IOException {
+
+      if (entry != null)
+        return Response.noContent().status(200).build();
+      else
+        return Response.noContent().status(404).build();
     }
 }

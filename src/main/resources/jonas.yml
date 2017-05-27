@@ -1,0 +1,12 @@
+server:
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 3000
+
+database:
+  driverClass: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/gastolibro
+  validationQuery: "SELECT 1"

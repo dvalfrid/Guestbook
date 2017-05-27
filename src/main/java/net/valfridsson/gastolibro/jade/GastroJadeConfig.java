@@ -3,8 +3,8 @@ package net.valfridsson.gastolibro.jade;
 public class GastroJadeConfig {
 
     public final String mainTemplateAbsolutePath = "main.jade";
-    public final String ENTRYKEY = "entries";
-    public final String BOOKKEY = "book";
+    public final String EntryKey = "entries";
+    public final String BookKey = "book";
 
     private GastroJadeConfig() {
     }

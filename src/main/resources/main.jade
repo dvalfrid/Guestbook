@@ -13,6 +13,29 @@ html
   
   body
     div(class="container-fluid")
+          div(class="row")
+            h1 = Input
+            form(id="gastro-input" name="sign-gastrolibro" action="/" method="post")
+              div.input
+                span.label Name
+                input(type="text" name="name")
+              div.input
+                span.label Message
+                textarea(name="message" cols="50" rows="4")
+              div.input
+                span.label Email
+                input(type="text" name="email")
+              div.actions
+                input(type="submit" value="add")
+
+            
+
+
+        div(class="container-fluid" id="input")
+
+
+
+    div(class="container-fluid")
       div(class="row")
         div(class="col-sm-5")
           ol#book
@@ -20,7 +43,7 @@ html
                 li #{book.name} #{book.id}
 
       div(class="row")
-        div(class="col-sm-5")
+        div(class="col-sm-5" id="entry-div")
           ol#entries
             for entry in entries
               li  #{entry.name}
@@ -29,27 +52,13 @@ html
               li  #{entry.city}
               li  #{entry.country}
               li  #{entry.message}
+              li(id="entry-date") #{entry.createTime}
+
+
+
 
   
-    div(class="container-fluid")
-      div(class="row")
-        h1 = Input
-        form(id="gastro-input" name="sign-gastrolibro" action="/" method="post")
-          div.input
-            span.label Name
-            input(type="text" name="name")
-          div.input
-            span.label Message
-            textarea(name="message" cols="50" rows="4")
-          div.actions
-            input(type="submit" value="add")
-            button(onclick="LoadEntries()")  
-
-        
-
-
-    div(class="container-fluid" id="input")
-      
+          
 
 
 

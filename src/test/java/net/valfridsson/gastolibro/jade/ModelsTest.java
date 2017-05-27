@@ -35,8 +35,8 @@ public class ModelsTest {
 
     String html = Models.buildModel
       ("main.jade")
-      .data(GastroJadeConfig.getInstance().ENTRYKEY, entry)
-      .data(GastroJadeConfig.getInstance().BOOKKEY, book)
+      .data(GastroJadeConfig.getInstance().EntryKey, entry)
+      .data(GastroJadeConfig.getInstance().BookKey, book)
       .render();
 
 
