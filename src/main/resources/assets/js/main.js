@@ -45,5 +45,9 @@ function LoadEntries() {
 
 }
 
+function BookNotViewable() {
+  document.body.innerHTML = "<p> Book not Viewable :( </p>";
+}
+
 
 
