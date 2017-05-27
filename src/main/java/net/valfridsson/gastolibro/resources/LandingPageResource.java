@@ -16,6 +16,7 @@ import com.google.common.collect.ImmutableList;
 import io.dropwizard.jersey.params.LongParam;
 
 import net.valfridsson.gastolibro.GastolibroApplication;
+import net.valfridsson.gastolibro.api.CreateEntry;
 import net.valfridsson.gastolibro.core.Book;
 import net.valfridsson.gastolibro.core.Entry;
 import net.valfridsson.gastolibro.jade.GastroJadeConfig;
@@ -55,7 +56,7 @@ public class LandingPageResource {
     @POST
     @Consumes("application/json")
     @Produces("application/json")
-    public Response RecieveGastroLibroEntry(Entry entry) throws IOException {
+    public Response RecieveGastroLibroEntry(CreateEntry entry) throws IOException {
 
       if (entry != null)
         return Response.noContent().status(200).build();
