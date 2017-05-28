@@ -1,11 +1,11 @@
 
 var entriesOnDisplay;
 var oldestEntry;
+var booddk;
 
-
-
+/*
 document.addEventListener("DOMContentLoaded", function() {
-  var elements = document.getElementById("entry-date").elements;
+  var elements = document.getElementById("entry-date").innerHTML;
 
   this.entriesOnDisplay = elements.size();
   
@@ -13,37 +13,31 @@ document.addEventListener("DOMContentLoaded", function() {
     this.oldestEntry = Math.min(Date.parse(elements[i]));
   }
 });
+*/
 
+$('.entry-form').on('submit', function() {
+    
+  var $form_input = $('#entry-form : input');
 
-function LoadEntries() {
-  var elements = document.getElementById("gastro-input").elements;
-  var str = {};
+  var associative_array = {};
 
-  for (var i = 0; i < elements.size(); i++) {
-    str[elements[i].name] = elements[i].value;
-  }
-
-  
-  document.getElementById("input").innerHTML = str;
-
-  var json = JSON.stringify(str);
-
+  $inputs.each(function() {
+      associative_array[this.name] = $(this).val();
+  });
 
   $.ajax({
-  type : "POST",
-  url : "http://localhost:3000/",
-  contentType :"application/json; charSet=UTF-8",
-  data : json,
-  dataType : "json"
-      })
-  .done(function(data){
-      console.log(data);
-      })
-  .fail(function(data) {
-      console.log(data);
-      })
+    type: "POST",
+    url: "localhost:3000/?bookId=10",
+    data: JSON.stringify({ Entries : associative_array }),
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function(data){alert(data);},
+    failure: function(errMsg) {
+        alert(errMsg);
+    }
+  })
 
-}
+});
 
 function BookNotViewable() {
   document.body.innerHTML = "<p> Book not Viewable :( </p>";
