@@ -54,13 +54,20 @@ public class LandingPageResource {
 
 
     @POST
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response RecieveGastroLibroEntry(CreateEntry entry) throws IOException {
 
-      if (entry != null)
-        return Response.noContent().status(200).build();
-      else
-        return Response.noContent().status(404).build();
+      if (entry.name == null)
+        return Response.status(400).build();
+
+
+      // DEt här får inte du Fixa, Jag skall fixa det så for jag förstår hur det är tänkt att de ska fungera.
+
+
+      System.out.println(entry);
+
+      return Response.status(200).build();
+
     }
 }

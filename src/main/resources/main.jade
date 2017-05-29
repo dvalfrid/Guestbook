@@ -20,13 +20,31 @@ html
             script.
               BookNotViewable();
       
+  
+  script.
+    window.alert("HELLO!");
 
 
   div(class="container-fluid")
+    h3(id="entries-header") Write Something! :)
+    
+    div.input
+      input(id ="name" type="text" placeholder='first & last-name')
+    div.input
+      textarea(id="message" cols="20" rows="5" placeholder="Leave a Message! :)")
+    div.input
+      input(type='button', 'onclick'="load_data()")
+
+
+    
+      
+
+
+//  div(class="container-fluid")
         div(class="row")
           div(class="col-sm-5")
             h3 Write something! :)
-            form(id="gastro-input" name="sign-gastrolibro" action="/" method="post")
+            form( enctype="text/plain" action="/" method="post")
               div.form-group
                  label(for='name') Name:
                  input#name.form-control(type='text', placeholder='first and last' name='name')
@@ -36,7 +54,7 @@ html
               div.form-group
                 div.input
                   span.label Message
-                    textarea(name="message" cols="40" rows="5")
+                  textarea(name="message" cols="40" rows="5")
               button.btn.btn-primary(type='submit') Sign up
           
 
