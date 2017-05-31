@@ -25,11 +25,11 @@ import net.valfridsson.gastolibro.jdbi.BookDao;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
 
 @Path("/")
-public class LandingPageResource {
+public class PageResource {
 
     private final GastolibroApplication application;
 
-    public LandingPageResource(GastolibroApplication application) {
+    public PageResource(GastolibroApplication application) {
         this.application = application;
     }
 
