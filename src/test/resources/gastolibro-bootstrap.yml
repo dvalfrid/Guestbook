@@ -1,0 +1,14 @@
+server:
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 8080
+
+database:
+  driverClass: org.h2.Driver
+  url: jdbc:h2:mem:gastolibro;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+  user:
+  password:
+  validationQuery: "SELECT 1"
