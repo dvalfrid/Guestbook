@@ -24,8 +24,9 @@ import net.valfridsson.gastolibro.jdbi.BookDao;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
 import static net.valfridsson.gastolibro.util.HandleException.logException;
 
-@Path("/")
+@Path("/books/{bookId}")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class BookResource {
 
     private final GastolibroApplication application;
@@ -71,20 +72,28 @@ public class BookResource {
  
    */ 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response RecieveGastroLibroEntry(CreateEntry entry) throws IOException {
+    @Path("/entries")
+    public Response RecieveGastroLibroEntry(@PathParam("bookId") LongParam id, @Valid CreateEntry entry, @Context HttpServletRequest request, @Context UriInfo uriInfo) throws IOException {
 
-      if (entry.name == null)
-        return Response.status(400).build();
-
-
-      // DEt här får inte du Fixa, Jag skall fixa det så for jag förstår hur det är tänkt att de ska fungera.
-
-
-      System.out.println(entry);
-
-      return Response.status(200).build();
-
+      return logException(() -> {
+        Optional<Book> book = application.getDbi().onDemand(BookDao.class).findById(id.get());
+        if (book.isPresent()) {
+          
+          Entry savedEntry = application.getDbi()
+            .onDemand(EntryDao.class)
+            .insert(entry, id.get(), request != null ? request.getRemoteAddr() : "unknown");
+          
+          return Response.created(uriInfo.getAbsolutePathBuilder()
+              .path(Long.toString(savedEntry.id)).build())
+              .entity(savedEntry)
+              .build();
+        
+        } else {
+          return Response.status(404).entity(ImmutableMap.of(
+                "entity", "book",
+                "id", id.get()
+                )).build();
+        }
+      }, String.format("Calling insert(%s, %s)", id.get(), entry));
     }
 }

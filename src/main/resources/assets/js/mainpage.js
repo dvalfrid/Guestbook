@@ -7,11 +7,13 @@ function load_data() {
   entries["name"] =  document.getElementById("name").value;
   entries["email"] = document.getElementById("email").value;
   entries["message"] = document.getElementById("message").value;
-
+  
+ 
+  
 
  $.ajax({
     type: "POST",
-    url: "/",
+    url: "/books/#{book.id}/entries",
     // The key needs to match your method's input parameter (case-sensitive).
     data: JSON.stringify(entries),
     contentType: "application/json; charset=utf-8",
@@ -22,4 +24,9 @@ function load_data() {
     }
 });
 
+}
+
+
+function get_id() {
+  return window.location.pathname.split()
 }
