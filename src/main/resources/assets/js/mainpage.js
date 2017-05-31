@@ -5,12 +5,9 @@ function load_data() {
 
 
   entries["name"] =  document.getElementById("name").value;
+  entries["email"] = document.getElementById("email").value;
   entries["message"] = document.getElementById("message").value;
 
-  window.alert(entries["name"]);
-  window.alert(entries["message"]);
-  
-  
 
  $.ajax({
     type: "POST",
