@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EntryDaoTest {
@@ -30,6 +32,20 @@ public class EntryDaoTest {
     }
 
     @Test
+    public void findX() throws Exception {
+        entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        Entry entry7 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+        Entry entry8 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
+
+        assertThat(entryDao.findX(10, 2, LocalDateTime.now())).containsOnly(entry8, entry7);
+    }
+
+    @Test
     public void insert() throws Exception {
         Entry insert = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
         assertThat(insert.ip).isEqualTo("192.168.10.10");
@@ -40,7 +56,7 @@ public class EntryDaoTest {
         assertThat(entryDao.nextId()).isPositive();
     }
 
-    public static CreateEntry getCreateEntry() {
+    private static CreateEntry getCreateEntry() {
         return new CreateEntry("name", "headline", "name@mail.com", "city", "country", "message");
     }
 }

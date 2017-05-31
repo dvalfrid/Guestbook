@@ -1,6 +1,7 @@
 package net.valfridsson.gastolibro.resources;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import javax.ws.rs.GET;
@@ -40,7 +41,7 @@ public class PageResource {
         Optional<Book> byId = application.getDbi().onDemand(BookDao.class).findById(bookId != null ? bookId.get() : -1);
         if (byId.isPresent()) {
             Book book = byId.get();
-            ImmutableList<Entry> entries = application.getDbi().onDemand(EntryDao.class).findAll(bookId.get());
+            ImmutableList<Entry> entries = application.getDbi().onDemand(EntryDao.class).findX(bookId.get(), 5, LocalDateTime.now());
             return Response
                     .ok(Models.buildModel()
                             .data(GastroJadeConfig.getInstance().EntryKey, entries)

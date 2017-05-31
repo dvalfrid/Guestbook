@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static net.valfridsson.gastolibro.util.HandleException.logException;
 
@@ -31,23 +32,23 @@ public class BookResource {
         this.application = application;
     }
 
-    /*
-        @GET
-        @Path("/{id}/entries")
-        public Response findAll(@PathParam("id") LongParam id) {
-            return logException(() -> {
-                Optional<Book> book = application.getDbi().onDemand(BookDao.class).findById(id.get());
-                return book.map(book1 -> Response.ok(ImmutableMap.of(
-                        "book", book1,
-                        "entries", application.getDbi().onDemand(EntryDao.class).findAll(id.get())
-                )).build()).orElseGet(() -> Response.status(404).entity(ImmutableMap.of(
-                        "entity", "book",
-                        "id", id.get()
-                )).build());
-            }, String.format("Calling findAll(%s)", id.get()));
-        }
 
-       */
+    @GET
+    @Path("/{id}/entries")
+    public Response findAll(@PathParam("id") LongParam id) {
+        return logException(() -> {
+            Optional<Book> book = application.getDbi().onDemand(BookDao.class).findById(id.get());
+            return book.map(book1 -> Response.ok(ImmutableMap.of(
+                    "book", book1,
+                    "entries", application.getDbi().onDemand(EntryDao.class).findAll(id.get()).stream().limit(5).collect(Collectors.toList())
+            )).build()).orElseGet(() -> Response.status(404).entity(ImmutableMap.of(
+                    "entity", "book",
+                    "id", id.get()
+            )).build());
+        }, String.format("Calling findAll(%s)", id.get()));
+    }
+
+
     @POST
     @Path("/entries")
     public Response insert(@PathParam("bookId") LongParam id,
