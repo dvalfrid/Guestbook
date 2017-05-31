@@ -2,15 +2,10 @@ function load_data() {
   
   entries = {}
 
-
-
   entries["name"] =  document.getElementById("name").value;
   entries["email"] = document.getElementById("email").value;
   entries["message"] = document.getElementById("message").value;
   
- 
-  
-
  $.ajax({
     type: "POST",
     url: "/books/#{book.id}/entries",
@@ -26,7 +21,3 @@ function load_data() {
 
 }
 
-
-function get_id() {
-  return window.location.pathname.split()
-}
