@@ -2,15 +2,11 @@ package net.valfridsson.gastolibro.resources;
 
 import com.google.common.collect.ImmutableMap;
 import io.dropwizard.jersey.params.LongParam;
-import net.valfridsson.gastolibro.GastolibroApplication;
-import net.valfridsson.gastolibro.api.CreateEntry;
-import net.valfridsson.gastolibro.core.Book;
-import net.valfridsson.gastolibro.core.Entry;
-import net.valfridsson.gastolibro.jdbi.BookDao;
-import net.valfridsson.gastolibro.jdbi.EntryDao;
-
+import java.io.IOException;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,11 +16,15 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.Optional;
-
+import net.valfridsson.gastolibro.GastolibroApplication;
+import net.valfridsson.gastolibro.api.CreateEntry;
+import net.valfridsson.gastolibro.core.Book;
+import net.valfridsson.gastolibro.core.Entry;
+import net.valfridsson.gastolibro.jdbi.BookDao;
+import net.valfridsson.gastolibro.jdbi.EntryDao;
 import static net.valfridsson.gastolibro.util.HandleException.logException;
 
-@Path("/books")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 public class BookResource {
 
@@ -33,7 +33,7 @@ public class BookResource {
     public BookResource(GastolibroApplication application) {
         this.application = application;
     }
-
+/*
     @GET
     @Path("/{id}/entries")
     public Response findAll(@PathParam("id") LongParam id) {
@@ -67,5 +67,24 @@ public class BookResource {
                 )).build();
             }
         }, String.format("Calling insert(%s, %s)", id.get(), entry));
+    }
+ 
+   */ 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response RecieveGastroLibroEntry(CreateEntry entry) throws IOException {
+
+      if (entry.name == null)
+        return Response.status(400).build();
+
+
+      // DEt här får inte du Fixa, Jag skall fixa det så for jag förstår hur det är tänkt att de ska fungera.
+
+
+      System.out.println(entry);
+
+      return Response.status(200).build();
+
     }
 }

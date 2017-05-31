@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class BookResourceTest {
-
+/*
     @Rule
     public TestDB testDB = new TestDB();
 
@@ -76,4 +76,6 @@ public class BookResourceTest {
         Response response = resources.client().target("/books/10/entries").request(MediaType.APPLICATION_JSON_TYPE).post(Entity.json(builder.build()));
         Assertions.assertThat(response.getStatus()).isEqualTo(201);
     }
+
+    */
 }
