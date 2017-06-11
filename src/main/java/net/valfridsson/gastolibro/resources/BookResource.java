@@ -4,10 +4,14 @@ import com.google.common.collect.ImmutableMap;
 import io.dropwizard.jersey.params.LongParam;
 import net.valfridsson.gastolibro.GastolibroApplication;
 import net.valfridsson.gastolibro.api.CreateEntry;
+import net.valfridsson.gastolibro.api.CreateUpdateRequest;
 import net.valfridsson.gastolibro.core.Book;
 import net.valfridsson.gastolibro.core.Entry;
+import net.valfridsson.gastolibro.core.UpdateRequest;
 import net.valfridsson.gastolibro.jdbi.BookDao;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
+import net.valfridsson.gastolibro.api.CreateUpdateResponse;
+import net.valfridsson.gastolibro.core.UpdateResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -32,6 +36,21 @@ public class BookResource {
         this.application = application;
     }
 
+    @GET
+    @Path("/{id}/entries")
+    public Response xEntriesDateRestricted(@PathParam("id") LongParam id, @Valid CreateUpdateRequest UpdateRequest) {
+      return Response.ok
+        (UpdateResponse
+         .newBuilder()
+         .entries(
+           application
+           .getDbi()
+           .onDemand(EntryDao.class)
+           .findX(UpdateRequest.id, UpdateRequest.x, UpdateRequest.date)
+           ).build())
+        .build();
+    }
+
 
     @GET
     @Path("/{id}/entries")
@@ -51,7 +70,7 @@ public class BookResource {
 
     @POST
     @Path("/entries")
-    public Response insert(@PathParam("bookId") LongParam id,
+    public Response dataBaseInsert(@PathParam("bookId") LongParam id,
                            @Valid CreateEntry entry,
                            @Context HttpServletRequest request,
                            @Context UriInfo uriInfo) {
