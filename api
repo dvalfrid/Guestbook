@@ -1,0 +1,27 @@
+
+
+/home/hello
+
+hello world
+
+
+/home/bookId/create
+
+with a create Entry Json will add description for that here l8r
+
+
+/home/bookId/request?numberOfEntries?oldestEntryId
+
+request new Entries to display
+
+
+/home/bookId/request?entryId
+
+get Entry
+
+
+/home/bookId/search?textSnippet
+
+get Object with Text and Entry ids to display for fuzzy search
+
+

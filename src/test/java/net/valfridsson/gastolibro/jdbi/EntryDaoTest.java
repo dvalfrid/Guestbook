@@ -31,6 +31,7 @@ public class EntryDaoTest {
         assertThat(entryDao.findAll(10)).containsOnly(entry1, entry2, entry3, entry4);
     }
 
+//TODO:Fix this test, sometimes fails.. sometimes doesnt!:P
     @Test
     public void findX() throws Exception {
         entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
