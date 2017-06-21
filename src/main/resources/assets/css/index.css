@@ -1,26 +1,12 @@
 
-a,
-  a:focus,
-  a:hover {
-color: #fff;
-  }
 
-
-html,
-  body {
-height: 100%;
-        background="http://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg"
-          text-shadow: 0 1px 3px rgba(0,0,0,.5);
-color: black;
-  }
-
-.site-wrapper {
-display: table;
-width: 100%;
-height: 100%;
-        min-height: 100%;
-        box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-        box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+html, body {
+  height: 100%;
+  width: 100%;
+  background-image= url("http://more-sky.com/data/out/9/IMG_296882.jpg");*/
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  color: black;
+  background-repeat: repeat;
 }
 
 .page-title {
@@ -32,9 +18,16 @@ height: 100%;
   text-align:center;
 }
 
+.entry-search-wrapper {
+  height: 100%;
+  margin: auto;
+}
+
 .gastro-entries {
   margin: auto;
-  width: 80%;
+  margin-right: 30%;
+  margin-top: 10%;
+  width: 60%;
   height: 100%;
   background-color: rgba(130, 130, 130, 0.05);
   padding: 2%;
@@ -47,7 +40,19 @@ height: 100%;
   border-bottom: 2px solid grey;
 }
 
-.message-info:hover {
+
+.message-info-expand {
+  line-height: 0.6;
+}
+
+
+.message-info-expand-email {
+  color: grey;
+  cursor: pointer;
+
+}
+
+.message-info:hover, .message-info-expand-email:hover {
   color: rgba(130, 130, 130, 0.5);
   cursor: pointer;
 }
