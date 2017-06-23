@@ -1,10 +1,11 @@
 
 var bookId;
-var toolsDiv;
-var entriesDiv;
 
 $(document).ready(function() {
     //TODO: Load Initial Content
+    for(i = 0; i < 10; i++) {
+        CreateEntry(entries["0"]);
+    }
 });
 
 
@@ -74,7 +75,7 @@ function contactInfoDiv(name, country, email, id) {
 
     var returnToContactOption = "<p class='message-info' onclick='loadMessageInfo(this.parentElement)'>minimize PS kommer formattera detta mkt bättre senare...</p>";
 
-    return "<div class='message-info-expand' id='" + id + "' data-view-state='false'> " + elem1 + elem2 + elem3 + returnToContactOption + "</div>";
+    return "<div class='message-info-expand' id='entry_" + id + "' data-view-state='false'> " + elem1 + elem2 + elem3 + returnToContactOption + "</div>";
 
 }
 
@@ -114,7 +115,49 @@ function redirect(url) {
 
 
 
+
+//ENTRY CREATING
+
+
+
+function CreateEntry(entry) {
+
+    title = "<h3 class='message-header'><em> " + entry.header + "</em></h3>";
+    message = "<p class='message'>" + entry.message + "</p>";
+    contact = "<p class='message-info' data-view-state='true' id='entry_" + entry.id + "' onclick='loadMessageInfo(this)'>Contact</p>";
+
+    holder = "<div class='gastro-entry'>" + title + message + contact + "</div>";
+
+    $(".gastro-entries").append(holder);
+}
+
+
+jQuery(function($) {
+    $(".gastro-entries").on('scroll', function() {
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+            //TODO Dynamically generate more Entries.
+            for (i = 0; i < 5; i++) {
+                CreateEntry(entries["0"]);
+            }
+        }
+    })
+
+});
+
+
+
+
+
 //Mock Data
 
-entries["0"] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", id:"entry_0"};
 
+var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
+entries["0"] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
+
+
+//FUZZY SEARCHING
+
+
+$(".gastro-tools-search-bar").autocomplete({
+    source:autocompletion
+});
