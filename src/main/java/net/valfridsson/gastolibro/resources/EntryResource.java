@@ -55,6 +55,8 @@ public class EntryResource {
       .onDemand(EntryDao.class)
       .insert(createEntry, id, request.getRemoteAddr());
 
+    Response.ok().
+
     return Response.status(200).build();
   }
 
@@ -80,9 +82,6 @@ public class EntryResource {
     //TODO: returnera id för inlägget som har matchingar och en kompirmerad snutt med text för att visa i sökningen, förslagsvis stället där texten matchar.
     //Det finns inbyggda funktioner i postgres för detta. Postgres måste dock få indexera databasen för att göra det snabbt nog :)!
     return Response.status(200).build();
-    cookie
   }
-
-
 
 }

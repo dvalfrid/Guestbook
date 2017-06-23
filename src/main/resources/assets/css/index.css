@@ -20,17 +20,81 @@ html, body {
 
 .entry-search-wrapper {
   height: 100%;
+  width: 100%;
   margin: auto;
+  margin-top: 7%;
+  display: flex;
 }
 
 .gastro-entries {
-  margin: auto;
-  margin-right: 30%;
-  margin-top: 10%;
-  width: 60%;
+  margin-top: 3%;
+  width: 100%;
   height: 100%;
   background-color: rgba(130, 130, 130, 0.05);
   padding: 2%;
+}
+
+.gastro-tools {
+  height: 100%;
+  max-width: 30%;
+  margin-top: 3%;
+}
+
+.gastro-tools-input-form {
+  margin: auto;
+  margin-top:70%;
+  width: 60%;
+  left: 0%;
+  height: 100%;
+
+}
+
+
+.gastro-tools-input-form-name {
+  margin-bottom: 5%;
+  width: 67%;
+  margin:
+}
+
+.gastro-tools-input-form-email {
+  margin-bottom: 5%;
+  width: 67%;
+}
+
+.gastro-tools-input-form-country {
+  margin-bottom: 5%;
+  width: 67%;
+}
+
+.gastro-tools-search {
+  margin: auto;
+  width: 60%;
+  margin-right:20%;
+
+}
+
+.gastro-tools-search-bar {
+  left:0;
+  transition: width 0.4s ease-in-out;
+  width: 67%;
+
+}
+
+.gastro-tools-search-bar:focus {
+  width: 87%;
+}
+
+.gastro-tools-management {
+  color: rgba(130, 130, 130, 0.5);
+  margin-right: 5%;
+  float:right;
+}
+
+.gastro-tools-expand {
+  margin:auto;
+  margin-top: 10%;
+  margin-right:0%;
+
 }
 
 .gastro-entry {

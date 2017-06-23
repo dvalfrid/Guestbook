@@ -1,12 +1,11 @@
+
 var bookId;
+var toolsDiv;
+var entriesDiv;
 
 $(document).ready(function() {
-
     //TODO: Load Initial Content
-
-
 });
-
 
 
 function requestEntries(numberOfEntries, oldestEntryId) {
@@ -46,11 +45,12 @@ function addEntrytoDB(entryContent) {
 }
 
 
-
 var entries = {};
 
 
-//FUNCTIONS FOR ONE GASTRO ENTRY
+//DYNAMIC HTML
+
+//entry html
 
 function loadMessageInfo(contact) {
 
@@ -64,7 +64,7 @@ function loadMessageInfo(contact) {
 }
 
 
-//Dynamic HTML elements
+//Dynamic HTML elements entry
 function contactInfoDiv(name, country, email, id) {
 
     console.log(email);
@@ -83,9 +83,22 @@ function contactInfoParagraph(id) {
 }
 
 
+toolsVisible = true;
+
+function toolsManagement() {
+    if (toolsVisible) {
+        $(".gastro-tools").hide();
+        $(".gastro-tools-management").text("show");
+        toolsVisible = false;
+    } else {
+        $(".gastro-tools").show();
+        $(".gastro-tools-management").text("hide");
+        toolsVisible = true;
+    }
+
+}
 
 
-//Utillities 
 
 
 function openEmail(email) {
