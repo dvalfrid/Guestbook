@@ -4,7 +4,7 @@ var bookId;
 $(document).ready(function() {
     //TODO: Load Initial Content
     for(i = 0; i < 10; i++) {
-        CreateEntry(entries["0"]);
+        CreateEntry(entries[0]);
     }
 });
 
@@ -73,14 +73,14 @@ function contactInfoDiv(name, country, email, id) {
     var elem2 = "<p class='message-info-expand-country'> country: " + country + "</p>";
     var elem3 = "<p class='message-info-expand-email' data-email='" + email + "' onclick='openEmail(this)'> email: " + email + "</p>";
 
-    var returnToContactOption = "<p class='message-info' onclick='loadMessageInfo(this.parentElement)'>minimize PS kommer formattera detta mkt bättre senare...</p>";
+    var returnToContactOption = "<p class='message-info' onclick='loadMessageInfo(this.parentElement)'>hide</p>";
 
     return "<div class='message-info-expand' id='entry_" + id + "' data-view-state='false'> " + elem1 + elem2 + elem3 + returnToContactOption + "</div>";
 
 }
 
 function contactInfoParagraph(id) {
-    return "<p class='message-info' data-view-state='true' id='" + id + "' onclick='loadMessageInfo(this)'>Contact</p>";
+    return "<p class='message-info' data-view-state='true' id='entry_" + id + "' onclick='loadMessageInfo(this)'>Contact</p>";
 }
 
 
@@ -88,12 +88,16 @@ toolsVisible = true;
 
 function toolsManagement() {
     if (toolsVisible) {
-        $(".gastro-tools").hide();
-        $(".gastro-tools-management").text("show");
+        $(".gastro-tools").fadeOut(200);
+        $(".gastro-entries").css("width", "100%");
+        $(".gastro-tools-management").fadeOut(100).text("show").fadeIn(100);
+
         toolsVisible = false;
     } else {
-        $(".gastro-tools").show();
-        $(".gastro-tools-management").text("hide");
+        $(".gastro-entries").css("width", "80%");
+
+        $(".gastro-tools").fadeIn(2000);
+        $(".gastro-tools-management").fadeOut(100).text("hide").fadeIn(100);
         toolsVisible = true;
     }
 
@@ -137,7 +141,7 @@ jQuery(function($) {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
             //TODO Dynamically generate more Entries.
             for (i = 0; i < 5; i++) {
-                CreateEntry(entries["0"]);
+                CreateEntry(entries[0]);
             }
         }
     })
@@ -152,7 +156,8 @@ jQuery(function($) {
 
 
 var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
-entries["0"] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
+
+entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
 
 
 //FUZZY SEARCHING

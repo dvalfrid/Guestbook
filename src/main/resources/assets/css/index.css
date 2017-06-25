@@ -3,8 +3,8 @@
 html, body {
   height: 100%;
   width: 100%;
-  background-image= url("http://more-sky.com/data/out/9/IMG_296882.jpg");*/
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  background-image: url("https://s-media-cache-ak0.pinimg.com/originals/69/0c/f6/690cf657788ea89a9ecabc258a0388f1.jpg") ;
+  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
   color: black;
   background-repeat: repeat;
 }
@@ -19,74 +19,82 @@ html, body {
 }
 
 .entry-search-wrapper {
-  height: 100%;
-  width: 100%;
-  margin-top: 7%;
+  height: 87%;
+  width: 98%;
   display: flex;
+  position:absolute;
+  top:10%;
+  right: 1%;
 }
 
 .gastro-entries {
-  margin-top: 3%;
-  width: 100%;
+  margin-right: 2%;
   height: 100%;
-  background-color: rgba(130, 130, 130, 0.05);
+  width:80%;
+  background-color: rgba(130, 130, 130, 0.1);
   transition: width 0.4s ease-in-out;
 
+  border-radius: 5%;
   overflow: auto;
+  position:absolute;
 }
 
 .gastro-tools {
   height: 100%;
-  max-width: 30%;
-  margin-top: 3%;
+  width: 15%;
   margin-right 2%;
+  position:absolute;
+  right: 2%;
+
+  background-color: rgba(130, 130, 130, 0.1);
+  border: 1px solid grey;
 }
 
 .gastro-tools-input-form {
-  margin-top:150%;
-  width: 80%;
-  height: 100%;
-  margin-left: 5%;
+  position:absolute;
+  width: 95%;
+  height: 50%;
+  bottom: 25%;
 }
 
 
 .gastro-tools-input-form-name {
   margin-bottom: 5%;
   width: 80%;
-  margin:
+  height: 5%
 }
 
 .gastro-tools-input-form-email {
   margin-bottom: 5%;
   width: 80%;
+  height: 5%
 }
 
 .gastro-tools-input-form-country {
   margin-bottom: 5%;
   width: 80%;
+  height: 5%
 }
 
 .gastro-tools-input-form-message {
   width: 100%;
-  height: 5%;
+  height: 10%;
   transition : height 0.4s ease-in-out;
 }
 
 .gastro-tools-input-form-message:focus {
-  height: 15%;
+  height: 20%;
 }
 
 .gastro-tools-search {
-  width: 80%;
-  margin-left 5%;
+  width: 90%;
+  position:absolute;
 
 }
 
 .gastro-tools-search-bar {
   transition: width 0.4s ease-in-out;
   width: 80%;
-  margin-top: 5%;
-  margin-left: 5%;
 
 }
 
@@ -100,7 +108,9 @@ html, body {
   right:0;
   height: 3%;
   width: 2%;
+  top: 5%;
   position: absolute;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
 .gastro-tools-expand {
@@ -116,6 +126,11 @@ html, body {
   border-bottom: 2px solid grey;
 }
 
+
+.message-info {
+  text-shadow: 0 1px 2px rgba(0,0,0,.5);
+  
+}
 
 .message-info-expand {
   line-height: 0.6;
