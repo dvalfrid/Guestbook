@@ -3,19 +3,33 @@
 html, body {
   height: 100%;
   width: 100%;
-  background-image: url("https://s-media-cache-ak0.pinimg.com/originals/69/0c/f6/690cf657788ea89a9ecabc258a0388f1.jpg") ;
+  /*background-image: url("https://s-media-cache-ak0.pinimg.com/originals/69/0c/f6/690cf657788ea89a9ecabc258a0388f1.jpg");*/
   /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
   color: black;
   background-repeat: repeat;
 }
 
-.page-title {
-  position: relative;
-  margin: auto;
-  clear: left;
-  height: auto;
+.page-title-div {
+  background-color: rgba(130, 130, 130, 0.1);
+  position:absolute;
+  width: 90%;
   z-index: 0;
   text-align:center;
+  height: 7%;
+  border-radius: 10%;
+  right: 5%;
+}
+
+.page-title {
+  width: 50%;
+}
+
+.gastro-tools-management {
+  color: rgba(130, 130, 130, 1.0);
+  right:4%;
+  bottom: 0%;
+  position: absolute;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
 .entry-search-wrapper {
@@ -46,8 +60,8 @@ html, body {
   position:absolute;
   right: 2%;
 
+  border-radius: 3%;
   background-color: rgba(130, 130, 130, 0.1);
-  border: 1px solid grey;
 }
 
 .gastro-tools-input-form {
@@ -89,6 +103,7 @@ html, body {
 .gastro-tools-search {
   width: 90%;
   position:absolute;
+  top: 6%;
 
 }
 
@@ -102,16 +117,6 @@ html, body {
   width: 100%;
 }
 
-.gastro-tools-management {
-  color: rgba(130, 130, 130, 1.0);
-  margin-right: 3%;
-  right:0;
-  height: 3%;
-  width: 2%;
-  top: 5%;
-  position: absolute;
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
-}
 
 .gastro-tools-expand {
   margin:auto;
