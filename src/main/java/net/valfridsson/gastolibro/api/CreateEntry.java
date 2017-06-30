@@ -35,7 +35,6 @@ public class CreateEntry {
         this.city = city;
         this.country = country;
         this.message = message;
-        this.
     }
 
     @Override

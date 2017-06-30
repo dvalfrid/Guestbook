@@ -3,6 +3,9 @@ var bookId;
 
 $(document).ready(function() {
     //TODO: Load Initial Content
+    SetTitleText(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")
+    SetTitle("Gastolibro");
+    
     for(i = 0; i < 10; i++) {
         CreateEntry(entries[0]);
     }
@@ -84,20 +87,20 @@ function contactInfoParagraph(id) {
 }
 
 
-toolsVisible = true;
+toolsVisible = false;
 
 function toolsManagement() {
     if (toolsVisible) {
         $(".gastro-tools").fadeOut(200);
         $(".gastro-entries").css("width", "100%");
-        $(".gastro-tools-management").fadeOut(100).text("show").fadeIn(100);
-
+        $(".gastro-entries").fadeIn(200)
         toolsVisible = false;
     } else {
-        $(".gastro-entries").css("width", "80%");
+        $(".gastro-entries").fadeOut(200);
+        $(".gastro-entries").css("width", "0%");
 
-        $(".gastro-tools").fadeIn(2000);
-        $(".gastro-tools-management").fadeOut(100).text("hide").fadeIn(100);
+        $(".gastro-tools").fadeIn(200);
+        $(".gastro-tools").css("width", "100%");
         toolsVisible = true;
     }
 
@@ -126,11 +129,21 @@ function redirect(url) {
 
 function CreateEntry(entry) {
 
-    title = "<h3 class='message-header'><em> " + entry.header + "</em></h3>";
+    title = "<h3 class='gastro-message-header'><em> " + entry.header + "</em></h3>";
+
+    date = "<h5 class='gastro-message-date'>" + entry.date + "</h5>";
+
+    title_date_div = "<div class='header-date'>" + title + date + "</div>";
+
     message = "<p class='message'>" + entry.message + "</p>";
+
+    response = "<p class='gastro-entry-response'>" + entry.response + "</p>";
+
     contact = "<p class='message-info' data-view-state='true' id='entry_" + entry.id + "' onclick='loadMessageInfo(this)'>Contact</p>";
 
-    holder = "<div class='gastro-entry'>" + title + message + contact + "</div>";
+    contact_response_div = "<div class='gastro-info-response'>" + contact + response + "</div>";
+
+    holder = "<div class='gastro-entry'>" + title_date_div + message + contact_response_div + "</div>";
 
     $(".gastro-entries").append(holder);
 }
@@ -138,8 +151,7 @@ function CreateEntry(entry) {
 
 jQuery(function($) {
     $(".gastro-entries").on('scroll', function() {
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-            //TODO Dynamically generate more Entries.
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
             for (i = 0; i < 5; i++) {
                 CreateEntry(entries[0]);
             }
@@ -147,6 +159,17 @@ jQuery(function($) {
     })
 
 });
+
+
+//STATIC ELEMENt SETTING
+
+function SetTitleText(titleText) {
+    $(".title-text").text(titleText);
+}
+
+function SetTitle(title) {
+    $(".page-title").text(title);
+}
 
 
 
@@ -157,7 +180,7 @@ jQuery(function($) {
 
 var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
 
-entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
+entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", response:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
 
 
 //FUZZY SEARCHING

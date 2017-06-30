@@ -19,29 +19,25 @@
 </head>
 
 <body>
-  <div class="page-title-div">
-    <h1 class="page-title">Gastolibro</h1>
-    <p class="gastro-tools-management" onclick="toolsManagement()">hide</p>
+  <div class="top-div">
+    <div class="title-search">
+    <h1 class="page-title"></h1>
+      <div class="gastro-tools-search">
+        <input class="gastro-tools-search-bar" type="text" name="search" placeholder="Search..">
+       </div>
+    </div>
+    <div class="page-title-text-div"> <p class="title-text"> </p> </div>
+    <!--<p class="gastro-tools-management" onclick="toolsManagement()">skriv</p>-->
   </div>
 
   <div class="entry-search-wrapper">
 
     <div class="gastro-entries">
-      <div class="gastro-entry">
-        <h3 class="messae-header"><em>S00perTitle</em></h3>
-        <p class="message">
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet.
-        </p>
-        <p class="message-info" data-view-state="true" id="entry_0" onclick="loadMessageInfo(this)">Contact</p>
-      </div>
+      <div class="gastro-right-button"> <img class="gastro-right-button-image" onclick="toolsManagement()"/> </div>
     </div>
-    <div class="gastro-tools" id='gastro-tools'>
-      <div class="gastro-tools-search">
-        <input class="gastro-tools-search-bar" type="text" name="search" placeholder="Search..">
-       </div>
+    <div class="gastro-tools" id='gastro-tools' style="display:none;">
+    <div class="gastro-left-button"> <img class="gastro-left-button-image" onclick="toolsManagement()"> </div>
+
       <form class="gastro-tools-input-form" action="" method="post">
           <input class="gastro-tools-input-form-name" type="text" placeholder="Name"/>
           <input class="gastro-tools-input-form-email" type="email" placeholder="Email"/>

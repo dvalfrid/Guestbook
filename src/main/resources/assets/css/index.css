@@ -9,42 +9,102 @@ html, body {
   background-repeat: repeat;
 }
 
-.page-title-div {
+.top-div {
   /*background-color: rgba(130, 130, 130, 0.1);*/
   position:absolute;
-  width: 90%;
+  width: 100%;
   z-index: 0;
   text-align:center;
-  height: 7%;
+  height: 20%;
   border-radius: 10%;
-  right: 5%;
 }
 
 .page-title {
-  width: 50%;
+  width: 40%;
 }
 
-.gastro-tools-management {
-  color: rgba(130, 130, 130, 1.0);
-  right:4%;
-  bottom: 0%;
-  position: absolute;
-  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
+.page-title-text-div {
+  position:absolute;
+  top: 30%;
+  width: 50%;
+  left: 1%;
 }
+
+.title-text {
+  color: (230, 230, 230);
+}
+
+.title-search {
+  position:absolute;
+  display: flex;
+  width: 100%;
+}
+
+.gastro-right-button {
+  position:absolute;
+  right:0%;
+  width:10%;
+  top:25%;
+  z-index:100;
+}
+
+.gastro-right-button-image {
+  width:100%;
+  height:auto;
+  content:url("http://www.clker.com/cliparts/2/9/b/8/1194984775760075334button-green_benji_park_01.svg.hi.png")
+}
+
+.gastro-left-button {
+  position:absolute;
+  left: 0%;
+  width: 10%;
+  top: 25%;
+  z-index:100;
+}
+
+.gastro-left-button-image {
+  width:100%;
+  height:auto;
+  content:url("http://www.clker.com/cliparts/2/9/b/8/1194984775760075334button-green_benji_park_01.svg.hi.png")
+}
+
+
+.gastro-tools-search {
+  width: 50%;
+  height: 40%;
+  position:absolute;
+  right: 0%;
+  top: 30%;
+}
+
+.gastro-tools-search-bar {
+  transition: width 0.4s ease-in-out;
+  width: 80%;
+  height: 100%;
+
+}
+
+/*.gastro-tools-management {*/
+  /*position: absolute;*/
+  /*color: rgba(130, 130, 130, 1.0);*/
+  /*right:4%;*/
+  /*bottom: 0%;*/
+  /*[>text-shadow: 0 1px 3px rgba(0,0,0,.5);<]*/
+/*}*/
 
 .entry-search-wrapper {
-  height: 87%;
+  height: 80%;
   width: 98%;
   display: flex;
   position:absolute;
-  top:10%;
+  top:20%;
   right: 1%;
 }
 
 .gastro-entries {
   margin-right: 2%;
   height: 100%;
-  width:80%;
+  width:100%;
   background-color: rgba(130, 130, 130, 0.1);
   transition: width 0.4s ease-in-out;
 
@@ -53,69 +113,52 @@ html, body {
   position:absolute;
 }
 
+
 .gastro-tools {
   height: 100%;
-  width: 15%;
-  margin-right 2%;
+  width: 100%;
   position:absolute;
-  right: 2%;
 
   border-radius: 3%;
-  background-color: rgba(130, 130, 130, 0.1);
+  background-color: rgba(130, 130, 130, 0.7);
 }
 
 .gastro-tools-input-form {
   position:absolute;
   width: 95%;
   height: 50%;
-  bottom: 25%;
+  bottom: 15%;
 }
 
 
 .gastro-tools-input-form-name {
-  margin-bottom: 5%;
+  margin-bottom: 1%;
   width: 80%;
-  height: 5%
+  height: 8%
 }
 
 .gastro-tools-input-form-email {
-  margin-bottom: 5%;
+  margin-bottom: 1%;
   width: 80%;
-  height: 5%
+  height: 8%
 }
 
 .gastro-tools-input-form-country {
-  margin-bottom: 5%;
+  margin-bottom: 1%;
   width: 80%;
-  height: 5%
+  height: 8%
 }
 
 .gastro-tools-input-form-message {
   width: 100%;
-  height: 10%;
+  height: 15%;
   transition : height 0.4s ease-in-out;
 }
 
 .gastro-tools-input-form-message:focus {
-  height: 20%;
+  height: 30%;
 }
 
-.gastro-tools-search {
-  width: 90%;
-  position:absolute;
-  top: 6%;
-
-}
-
-.gastro-tools-search-bar {
-  transition: width 0.4s ease-in-out;
-  width: 80%;
-
-}
-
-.gastro-tools-search-bar:focus {
-  width: 100%;
-}
 
 
 .gastro-tools-expand {
@@ -131,10 +174,34 @@ html, body {
   border-bottom: 2px solid grey;
 }
 
+.header-date {
+  display: flex;
+  width: 100%;
+}
+
+.gastro-message-date {
+  position:absolute;
+  right: 5%;
+}
+
+
+.gastro-info-response {
+  display:flex;
+}
+
+.gastro-entry-response {
+  position: absolute;
+  right:30%;
+  font-style:italic;
+}
+.gastro-message-header {
+}
+
+.gastro-message {
+
+}
 
 .message-info {
-  text-shadow: 0 1px 2px rgba(0,0,0,.5);
-  
 }
 
 .message-info-expand {
