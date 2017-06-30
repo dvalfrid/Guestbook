@@ -1,60 +1,85 @@
 
 var bookId;
 
+//Parsing Queries
+function qs(key) {
+    key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
+    var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
+    return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//ONLOAD Functions
+
 $(document).ready(function() {
     //TODO: Load Initial Content
-    SetTitleText(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")
-    SetTitle("Gastolibro");
-    
-    for(i = 0; i < 10; i++) {
-        CreateEntry(entries[0]);
-    }
+    //SetTitleText(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")
+    //SetTitle("Gastolibro");
+
+    //for(i = 0; i < 10; i++) {
+        //CreateEntry(entries[0]);
+    //}
+
+    setBook(qs("bookId"));
 });
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//API Functions
+function setBook(bookid) {
+    bookId = bookid;
+
+    $.get("/api/book/" + bookid, function(book, status) {
+        SetTitle(book.title);
+        SetTitleText(book.description);
+    });
+
+}
+
 function requestEntries(numberOfEntries, oldestEntryId) {
-    return $.get("/home/" + bookId + "/request?" + numberOfEntries + "?" + oldestEntryId,
+    return $.get("/api/books/" + bookId + "/entries/" + "?numberOfEntries=" + numberOfEntries  + "&?afterId=" + oldestEntryId,
         function( entries ) {
             return entries;
         });
 }
 
 function requestEntry(entryId) {
-    return $.get("/home/" + bookId + "/request?" + entryId,
+    return $.get("/api/books/" + bookId + "entries/" + entryId,
         function ( entry ) {
             return entry;
         });
 }
 
 function fuzzySearch(str) {
-    return $.get("/home/" + bookId + "/search?" + str,
+    return $.get("/api/books/" + bookId + "/search/?snippet=" + str,
         function ( objects ) {
             return objects;
         });
 }
 
-
-function addEntrytoDB(entryContent) {
-    $.ajax({
-        type: "POST",
-        url: "/home/"+ bookId + "/create",
-        data: JSON.stringify(entryContent),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) { alert(data); },
-        failure: function(errMsg) {
-            alert(errMsg);
-        }
+function addEntrytoDB(entry) {
+    $.post("/api/books/" + bookId + "/entries", entry, function(data, status){
+        if (status == 200)
+            return true;
+        else
+            return false;
     });
 }
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//In memory content
 
 var entries = {};
 
 
-//DYNAMIC HTML
 
-//entry html
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Entry Dynamic HTML.. Bad practise Inline Html..
 
 function loadMessageInfo(contact) {
 
@@ -87,6 +112,10 @@ function contactInfoParagraph(id) {
 }
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Dynamic movement for entries & tools wrapper
+
 toolsVisible = false;
 
 function toolsManagement() {
@@ -108,6 +137,9 @@ function toolsManagement() {
 
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Tooling
 
 function openEmail(email) {
     //for Lulz atm
@@ -123,7 +155,9 @@ function redirect(url) {
 
 
 
-//ENTRY CREATING
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Adding Content
 
 
 
@@ -137,7 +171,7 @@ function CreateEntry(entry) {
 
     message = "<p class='message'>" + entry.message + "</p>";
 
-    response = "<p class='gastro-entry-response'>" + entry.response + "</p>";
+    response = "<p class='gastro-entry-response'>" + entry.comment + "</p>";
 
     contact = "<p class='message-info' data-view-state='true' id='entry_" + entry.id + "' onclick='loadMessageInfo(this)'>Contact</p>";
 
@@ -149,20 +183,32 @@ function CreateEntry(entry) {
 }
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Generate Content While Scrolling
 jQuery(function($) {
     $(".gastro-entries").on('scroll', function() {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
+            localEntries = requestEntries(5, entries[-1].id);
             for (i = 0; i < 5; i++) {
-                CreateEntry(entries[0]);
+                localEntry = localentries[i];
+
+                entries[localEntry.id] = localEntry;
+                CreateEntry(localEntries);
             }
+            //for (i = 0; i < 5; i++) {
+                //CreateEntry(entries[0]);
+            //}
         }
     })
 
 });
 
 
-//STATIC ELEMENt SETTING
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Setters for static content
 function SetTitleText(titleText) {
     $(".title-text").text(titleText);
 }
@@ -172,20 +218,24 @@ function SetTitle(title) {
 }
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
-//Mock Data
-
-
-var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
-
-entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", response:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
-
-
-//FUZZY SEARCHING
+//AutoCompletion
 
 
 $(".gastro-tools-search-bar").autocomplete({
     source:autocompletion
 });
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Mock Data
+
+var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
+
+entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", comment:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
+
+
+
+
