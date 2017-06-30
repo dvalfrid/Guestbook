@@ -29,7 +29,7 @@
     </changeSet>
 
     <changeSet id="002-createEntryTable" author="dvalfrid">
-        <createSequence sequenceName="entry_sequence" startValue="1"/>
+        <createSequence sequenceName="entry_sequence" startValue="10"/>
 
         <createTable tableName="entry">
             <column name="id" type="number">
@@ -80,6 +80,32 @@
             <column name="name" value="Test Book"/>
             <column name="view_able" value="true"/>
             <column name="create_time" value="now()"/>
+        </insert>
+        <insert tableName="entry">
+            <column name="id" value="1"/>
+            <column name="name" value="Kalle Pettersson"/>
+            <column name="headline" value="Första test"/>
+            <column name="message" value="Nu testar vi för första gången"/>
+            <column name="city" value="Stockholm"/>
+            <column name="country" value="Sverige"/>
+            <column name="email" value="kalle@pettersson.se"/>
+            <column name="ip" value="127.0.0.1"/>
+            <column name="create_time" value="now()"/>
+            <column name="view_able" value="true"/>
+            <column name="book_id" value="10"/>
+        </insert>
+        <insert tableName="entry">
+            <column name="id" value="2"/>
+            <column name="name" value="Kalle Pettersson"/>
+            <column name="headline" value="Andra test"/>
+            <column name="message" value="Nu testar vi för andra gången"/>
+            <column name="city" value="Stockholm"/>
+            <column name="country" value="Sverige"/>
+            <column name="email" value="kalle@pettersson.se"/>
+            <column name="ip" value="127.0.0.1"/>
+            <column name="create_time" value="now()"/>
+            <column name="view_able" value="true"/>
+            <column name="book_id" value="10"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

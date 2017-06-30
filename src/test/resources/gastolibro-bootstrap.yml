@@ -1,10 +1,11 @@
 server:
   type: simple
+  rootPath: /api/
   applicationContextPath: /
   adminContextPath: /admin
   connector:
     type: http
-    port: 8080
+    port: 8081
 
 database:
   driverClass: org.h2.Driver

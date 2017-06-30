@@ -31,7 +31,7 @@ $(document).ready(function() {
 function setBook(bookid) {
     bookId = bookid;
 
-    $.get("/api/book/" + bookid, function(book, status) {
+    $.get("/api/books/" + bookid, function(book, status) {
         SetTitle(book.title);
         SetTitleText(book.description);
     });

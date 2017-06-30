@@ -1,5 +1,6 @@
 package net.valfridsson.gastolibro.jdbi;
 
+import com.google.common.collect.ImmutableList;
 import net.valfridsson.gastolibro.api.CreateEntry;
 import net.valfridsson.gastolibro.core.Entry;
 import org.junit.Before;
@@ -43,7 +44,8 @@ public class EntryDaoTest {
         Entry entry7 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
         Entry entry8 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
 
-        assertThat(entryDao.findX(10, 2, LocalDateTime.now())).containsOnly(entry8, entry7);
+        ImmutableList<Entry> x = entryDao.findX(10, 10, 6);
+        assertThat(x).containsOnly(entry8, entry7);
     }
 
     @Test

@@ -24,10 +24,15 @@ public abstract class EntryDao implements GetHandle {
     public abstract ImmutableList<Entry> findAll(@Bind("bookId") long bookId);
 
 
-    @SqlQuery("SELECT * FROM entry e where e.book_id = :bookId AND e.create_time < :from ORDER BY e.create_time DESC limit :limit ")
+    @SqlQuery("SELECT * FROM entry e where e.book_id = :bookId AND e.id > :after ORDER BY e.create_time DESC limit :limit ")
     public abstract ImmutableList<Entry> findX(@Bind("bookId") long bookId,
                                                @Bind("limit") long limit,
-                                               @Bind("from") LocalDateTime from);
+                                               @Bind("after") long from);
+
+    @SingleValueResult
+    @SqlQuery("SELECT * FROM entry e WHERE e.book_id = :bookId AND e.id = :entryId")
+    public abstract Optional<Entry> findBy(@Bind("bookId") long bookId,
+                                           @Bind("entryId") long entryId);
 
     public Entry insert(CreateEntry createEntry, long bookId, String ip) {
         return getHandle().inTransaction((conn, status) -> {

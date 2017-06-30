@@ -10,6 +10,7 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import net.valfridsson.gastolibro.health.SimpleHealthCheck;
+import net.valfridsson.gastolibro.resources.BookResource;
 import org.skife.jdbi.v2.DBI;
 
 public class GastolibroApplication extends Application<GastolibroConfiguration> {
@@ -34,9 +35,8 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
           }
           });
 
-      bootstrap.addBundle(new AssetsBundle("/assets", "/home", "index.html", "home"));
-      bootstrap.addBundle(new AssetsBundle("/assets/js", "/js", "index.js"));
-      bootstrap.addBundle(new AssetsBundle("/assets/css", "/css", "index.css"));
+      bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html", "home"));
+
 
     }
 
@@ -45,6 +45,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
       DataSourceFactory factory = configuration.getDatabase();
       jdbi = new DBIFactory().build(environment, factory, factory.getUrl());
       environment.healthChecks().register("gastolibro", new SimpleHealthCheck());
+      environment.jersey().register(new BookResource(this));
     }
 
   public DBI getDbi() {

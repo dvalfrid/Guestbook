@@ -14,7 +14,7 @@ public class Entry {
     public final String name;
     @JsonProperty("ip")
     public final String ip;
-    @JsonProperty("headline")
+    @JsonProperty("header")
     public final String headline;
     @JsonProperty("email")
     public final String email;
@@ -24,8 +24,10 @@ public class Entry {
     public final String country;
     @JsonProperty("message")
     public final String message;
-    @JsonProperty("createTime")
+    @JsonProperty("date")
     public final LocalDateTime createTime;
+    @JsonProperty("comment")
+    public final String comment;
     public final boolean viewAble;
 
     private Entry(Builder builder) {
@@ -39,6 +41,7 @@ public class Entry {
         this.message = builder.message;
         this.createTime = builder.createTime;
         this.viewAble = builder.viewAble;
+        this.comment = builder.comment;
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
@@ -66,6 +69,7 @@ public class Entry {
         private String country;
         private String message;
         private LocalDateTime createTime;
+        private String comment;
         private boolean viewAble;
 
         public Builder id(long id) {
@@ -115,6 +119,11 @@ public class Entry {
 
         public Builder viewAble(boolean viewAble) {
             this.viewAble = viewAble;
+            return this;
+        }
+
+        public Builder comment(String comment) {
+            this.comment = comment;
             return this;
         }
 
