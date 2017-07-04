@@ -2,35 +2,16 @@ package net.valfridsson.gastolibro.resources;
 
 import com.google.common.collect.ImmutableMap;
 import io.dropwizard.jersey.params.LongParam;
-
 import net.valfridsson.gastolibro.GastolibroApplication;
-import net.valfridsson.gastolibro.api.CreateEntry;
 import net.valfridsson.gastolibro.core.Book;
 import net.valfridsson.gastolibro.core.Entry;
 import net.valfridsson.gastolibro.jdbi.BookDao;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
 
-import java.io.IOException;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Context;
-
-
-import java.util.Base64;
+import java.util.Optional;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -46,7 +27,9 @@ public class BookResource {
     @GET
     public Response getBook(@PathParam("bookId") LongParam bookId) {
         Optional<Book> optional = application.getDbi().onDemand(BookDao.class).findById(bookId.get());
-        return optional.map(book -> Response.ok(book).build()).orElseGet(() -> Response.status(404).build());
+        return optional.map(book -> Response
+                .ok(book.with(application.getDbi().onDemand(EntryDao.class).findAll(bookId.get())))
+                .build()).orElseGet(() -> Response.status(404).build());
     }
 
     @GET
