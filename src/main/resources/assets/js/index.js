@@ -1,11 +1,17 @@
 
 var bookId;
+var entries = {};
 
 //Parsing Queries
-function qs(key) {
+function urlKeys(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
     return match && decodeURIComponent(match[1].replace(/\+/g, " "));
+}
+
+//TODO: Make sure input is correctly formated. NEED to choose a mail REGEX
+function validations(entry) {
+    return true;
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -14,29 +20,31 @@ function qs(key) {
 
 $(document).ready(function() {
     //TODO: Load Initial Content
-    //SetTitleText(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")
-    //SetTitle("Gastolibro");
+    //$(".title-text").text(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+    //$(".page-title").text("Gastolibro");
 
     //for(i = 0; i < 10; i++) {
-        //CreateEntry(entries[0]);
+        //createEntry(entries[0]);
     //}
 
-    setBook(qs("bookId"));
+    bookId = urlKeys("bookId");
+
+    $.get("/api/books/" + bookId, function(book, status) {  /*Real Code*/
+        $(".title-text").text(book.description);
+        $(".page-title").text(book.title);
+        book.entries.forEach(CreateEntry);
+    });
+
+    if (bookId == null) {
+        crash(0);
+    }
 });
+
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 //API Functions
-function setBook(bookid) {
-    bookId = bookid;
-
-    $.get("/api/books/" + bookid, function(book, status) {
-        SetTitle(book.title);
-        SetTitleText(book.description);
-    });
-
-}
 
 function requestEntries(numberOfEntries, oldestEntryId) {
     return $.get("/api/books/" + bookId + "/entries/" + "?numberOfEntries=" + numberOfEntries  + "&?afterId=" + oldestEntryId,
@@ -68,55 +76,115 @@ function addEntrytoDB(entry) {
     });
 }
 
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-//In memory content
-
-var entries = {};
-
-
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
+//Scrolling function
 
-//Entry Dynamic HTML.. Bad practise Inline Html..
+$(function($) {
+    $(".gastro-entries").on('scroll', function() {
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
+            requestEntries(5, entries[-1].id).forEach(createEntry);
 
-function loadMessageInfo(contact) {
+            //for (i = 0; i < 5; i++) {
+                //createEntry(entries[0]); [>Mock<]
+            //}
+        }
+    })
 
-    var entry = entries[$(contact).attr("id").split("_")[1]];
+});
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//Adding Entry
+function submitHandler() {
+    entry = getSubmissionContent();
 
-    if ($(contact).data("view-state")) {
-        $(contact).replaceWith(contactInfoDiv(entry.name, entry.country, entry.email, entry.id));
-    } else {
-        $(contact).replaceWith(contactInfoParagraph(entry.id));
+    if (validations(entry)) {
+        addEntrytoDB(entry);
+        //location.reload(); //Reload content to view input
     }
 }
 
+function getSubmissionContent() {
+    var entry = {};
+    $("form#input-form :input").each(function() {
+        entry[$(this).attr("id")] = $(this).attr("value");
+    });
 
-//Dynamic HTML elements entry
-function contactInfoDiv(name, country, email, id) {
-
-    console.log(email);
-    var elem1 = "<p class='message-info-expand-name'> name: " + name + "</p>";
-    var elem2 = "<p class='message-info-expand-country'> country: " + country + "</p>";
-    var elem3 = "<p class='message-info-expand-email' data-email='" + email + "' onclick='openEmail(this)'> email: " + email + "</p>";
-
-    var returnToContactOption = "<p class='message-info' onclick='loadMessageInfo(this.parentElement)'>hide</p>";
-
-    return "<div class='message-info-expand' id='entry_" + id + "' data-view-state='false'> " + elem1 + elem2 + elem3 + returnToContactOption + "</div>";
-
-}
-
-function contactInfoParagraph(id) {
-    return "<p class='message-info' data-view-state='true' id='entry_" + id + "' onclick='loadMessageInfo(this)'>Contact</p>";
+    return entry;
 }
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-//Dynamic movement for entries & tools wrapper
+//DYNAMIC CONTENT
 
-toolsVisible = false;
+function createEntry(entry) {
+    entries[entry.id] = entry;
+
+    $(".gastro-entries").append(`
+        <div class='gastro-entry'>
+            <div class='header-date'>
+                <h3 class='gastro-message-header'><em>${entry.header}</em></h3>
+                <h5 class='gastro-message-date'>${entry.date}</h5>
+            </div>
+            <p class='message'>${entry.message}</p>
+            <p class='gastro-entry-response'>${entry.comment}</p>
+            <div class='gastro-info-response'>
+                <p class='message-info' data-view-state='true' data-id=${entry.id} onclick='loadMessageInfo(this)'>Contact</p>
+                <p class='gastro-entry-response'>${entry.comment}</p>
+            </div>
+        </div>
+      `)
+}
+
+function contactInfoDiv(contactInfo) {
+    return `
+        <div class='message-info-expand' data-id=${contactInfo.id} data-view-state='false'>
+            <p class='message-info-expand-name'> name: ${contactInfo.name}</p>
+            <p class='message-info-expand-country'> counter: ${contactInfo.country}</p>
+            <p class='message-info-expand-email' data-email='${contactInfo.email}' onclick='openEmail(this)'> email: ${contactInfo.email} </p>
+            <p class='message-info' onclick='loadMessageInfo(this.parentElement)'>hide</p>
+        </div>
+    `
+}
+
+function contactInfoParagraph(contactInfo) {
+    return  `
+        <p class='message-info' data-view-state='true' data-id=${contactInfo.id} onclick='loadMessageInfo(this)'>Contact</p>
+    `
+}
+
+function crashHtml(string) {
+ return `
+    <head>
+      <link href="css/index.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <p>${string}</p>
+        <div class='crash-image-div'>
+            <img class='crash-image'>
+        </div>
+    </body>
+ `
+}
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+//Managing the Dynamic content
+
+function loadMessageInfo(contact) {
+
+    console.log($(contact).data("id"));
+    var entry = entries[$(contact).data("id")];
+
+    if ($(contact).data("view-state")) {
+        $(contact).replaceWith(contactInfoDiv(entry));
+    } else {
+        $(contact).replaceWith(contactInfoParagraph(entry));
+    }
+}
+
+toolsVisible = false; // If it works it ain't stupid #ThugLife
 
 function toolsManagement() {
     if (toolsVisible) {
@@ -133,6 +201,16 @@ function toolsManagement() {
         toolsVisible = true;
     }
 
+}
+
+function crash(code) {
+ switch(code) {
+    case 0:
+        document.documentElement.innerHTML = crashHtml("Could not find book, or book not defined :(");
+        break;
+    default:
+        console.log("unknown Error :(");
+ }
 }
 
 
@@ -152,72 +230,6 @@ function redirect(url) {
     window.location.replace(url);
 }
 
-
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-//Adding Content
-
-
-
-function CreateEntry(entry) {
-
-    title = "<h3 class='gastro-message-header'><em> " + entry.header + "</em></h3>";
-
-    date = "<h5 class='gastro-message-date'>" + entry.date + "</h5>";
-
-    title_date_div = "<div class='header-date'>" + title + date + "</div>";
-
-    message = "<p class='message'>" + entry.message + "</p>";
-
-    response = "<p class='gastro-entry-response'>" + entry.comment + "</p>";
-
-    contact = "<p class='message-info' data-view-state='true' id='entry_" + entry.id + "' onclick='loadMessageInfo(this)'>Contact</p>";
-
-    contact_response_div = "<div class='gastro-info-response'>" + contact + response + "</div>";
-
-    holder = "<div class='gastro-entry'>" + title_date_div + message + contact_response_div + "</div>";
-
-    $(".gastro-entries").append(holder);
-}
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-//Generate Content While Scrolling
-jQuery(function($) {
-    $(".gastro-entries").on('scroll', function() {
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
-            localEntries = requestEntries(5, entries[-1].id);
-            for (i = 0; i < 5; i++) {
-                localEntry = localentries[i];
-
-                entries[localEntry.id] = localEntry;
-                CreateEntry(localEntries);
-            }
-            //for (i = 0; i < 5; i++) {
-                //CreateEntry(entries[0]);
-            //}
-        }
-    })
-
-});
-
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------
-
-//Setters for static content
-function SetTitleText(titleText) {
-    $(".title-text").text(titleText);
-}
-
-function SetTitle(title) {
-    $(".page-title").text(title);
-}
-
-
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 //AutoCompletion
@@ -235,6 +247,7 @@ $(".gastro-tools-search-bar").autocomplete({
 var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
 
 entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", comment:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
+
 
 
 

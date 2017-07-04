@@ -37,12 +37,12 @@
     </div>
     <div class="gastro-tools" id='gastro-tools' style="display:none;">
     <div class="gastro-left-button"> <img class="gastro-left-button-image" onclick="toolsManagement()"> </div>
-
-      <form class="gastro-tools-input-form" action="" method="post">
-          <input class="gastro-tools-input-form-name" type="text" placeholder="Name"/>
-          <input class="gastro-tools-input-form-email" type="email" placeholder="Email"/>
-          <input class="gastro-tools-input-form-country" type="text" placeholder="Country"/>
-          <textarea class="gastro-tools-input-form-message" placeholder="Leave a message..."></textarea>
+    <div class="gastro-input-button"><img class="gastro-input-button-image" onclick="submitHandler()"> </div>
+      <form class="gastro-tools-input-form" id="input-form">
+          <input class="gastro-tools-input-form-name" id="name" type="text" placeholder="Name"/>
+          <input class="gastro-tools-input-form-email" id="email" type="email" placeholder="Email"/>
+          <input class="gastro-tools-input-form-country" id="country" type="text" placeholder="Country"/>
+          <textarea class="gastro-tools-input-form-message" id="message" placeholder="Leave a message..."></textarea>
       </form>
     </div>
   </div>
