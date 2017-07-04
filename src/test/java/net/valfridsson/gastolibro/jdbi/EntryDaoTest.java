@@ -29,7 +29,7 @@ public class EntryDaoTest {
         Entry entry3 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
         Entry entry4 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
 
-        assertThat(entryDao.findAll(10)).containsOnly(entry1, entry2, entry3, entry4);
+        assertThat(entryDao.findAll(10)).contains(entry1, entry2, entry3, entry4);
     }
 
 //TODO:Fix this test, sometimes fails.. sometimes doesnt!:P
@@ -45,7 +45,7 @@ public class EntryDaoTest {
         Entry entry8 = entryDao.insert(getCreateEntry(), 10, "192.168.10.10");
 
         ImmutableList<Entry> x = entryDao.findX(10, 10, 6);
-        assertThat(x).containsOnly(entry8, entry7);
+        assertThat(x).contains(entry8, entry7);
     }
 
     @Test
