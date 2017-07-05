@@ -68,12 +68,19 @@ function fuzzySearch(str) {
 }
 
 function addEntrytoDB(entry) {
-    $.post("/api/books/" + bookId + "/entries", JSON.stringify(entry), function(data, status){
-        if (status == 200)
+    $.ajax({
+    type: "POST",
+    url: "/api/books/" + bookId + "/entries",
+    data: JSON.stringify(entry),
+    success: function(data, status) {
+        if (status == 201)
             return true;
         else
             return false;
-    });
+    },
+    contentType: "application/json",
+    dataType: 'json'
+    })
 }
 
 
