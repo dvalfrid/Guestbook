@@ -11,7 +11,10 @@ html, body {
   background-repeat: repeat;
 }
 
-.top-div {
+
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*TOP DIV*/
+.div-top {
   /*background-color: rgba(130, 130, 130, 0.1);*/
   position:absolute;
   width: 100%;
@@ -23,14 +26,14 @@ html, body {
 }
 
 .page-title {
-  width: 40%;
+  width: 100%;
 }
 
-.page-title-text-div {
+.div-title-text {
   position:absolute;
   top: 30%;
-  width: 50%;
-  left: 1%;
+  width: 70%;
+  left:15%;
 }
 
 .title-text {
@@ -43,74 +46,14 @@ html, body {
   width: 100%;
 }
 
-.gastro-right-button {
-  position:absolute;
-  right:0%;
-  width:10%;
-  top:40%;
-  z-index:100;
-}
 
-.gastro-right-button-image {
-  width:100%;
-  height:auto;
-  content:url("http://www.clker.com/cliparts/2/9/b/8/1194984775760075334button-green_benji_park_01.svg.hi.png")
-}
 
-.gastro-left-button {
-  position:absolute;
-  left: 0%;
-  width: 10%;
-  top: 40%;
-  z-index:100;
-}
-
-.gastro-left-button-image {
-  width:100%;
-  height:auto;
-  content:url("http://www.clker.com/cliparts/2/9/b/8/1194984775760075334button-green_benji_park_01.svg.hi.png")
-}
-
-.gastro-input-button {
-  position:absolute;
-  width: 25%;
-  bottom: 5%;
-  left: 30%;
-  z-index:100;
-}
-
-.gastro-input-button-image {
-  width:100%;
-  height:auto;
-  content:url("http://vignette1.wikia.nocookie.net/tayothelittlebus/images/9/97/Bob_minions_2015.png/revision/latest?cb=20150807182137");
-}
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*MAIN CONTENT */
 
 
 
-.gastro-tools-search {
-  width: 50%;
-  height: 40%;
-  position:absolute;
-  right: 0%;
-  top: 30%;
-}
-
-.gastro-tools-search-bar {
-  transition: width 0.4s ease-in-out;
-  width: 80%;
-  height: 100%;
-
-}
-
-/*.gastro-tools-management {*/
-  /*position: absolute;*/
-  /*color: rgba(130, 130, 130, 1.0);*/
-  /*right:4%;*/
-  /*bottom: 0%;*/
-  /*[>text-shadow: 0 1px 3px rgba(0,0,0,.5);<]*/
-/*}*/
-
-.entry-search-wrapper {
+.div-main-content-wrapper {
   height: 80%;
   width: 98%;
   display: flex;
@@ -119,7 +62,7 @@ html, body {
   right: 1%;
 }
 
-.gastro-entries {
+.div-entries {
   margin-right: 2%;
   height: 100%;
   width:100%;
@@ -131,8 +74,7 @@ html, body {
   position:absolute;
 }
 
-
-.gastro-tools {
+.div-entry-input {
   height: 100%;
   width: 100%;
   position:absolute;
@@ -141,7 +83,11 @@ html, body {
   background-color: rgba(130, 130, 130, 0.7);
 }
 
-.gastro-tools-input-form {
+
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*Entry Input*/
+
+.form-entry {
   position:absolute;
   width: 60%;
   height: 50%;
@@ -149,98 +95,98 @@ html, body {
   left: 25%;
 }
 
-
-.gastro-tools-input-form-name {
+.entry-name {
   margin-bottom: 1%;
   width: 80%;
   height: 8%
 }
 
-.gastro-tools-input-form-email {
+.entry-email {
   margin-bottom: 1%;
   width: 80%;
   height: 8%
 }
 
-.gastro-tools-input-form-country {
+.entry-country {
   margin-bottom: 1%;
   width: 80%;
   height: 8%
 }
 
-.gastro-tools-input-form-message {
+.entry-message {
   width: 80%;
   height: 15%;
   transition : height 0.4s ease-in-out;
 }
 
-.gastro-tools-input-form-message:focus {
+.entry-message:focus {
   height: 30%;
 }
 
 
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*Entry*/
 
-.gastro-tools-expand {
-  margin:auto;
-  margin-top: 10%;
-  margin-right:0%;
-
-}
-
-.gastro-entry {
-  margin: auto;
+.div-entry {
+  margin-left:5%;
   width: 75%;
+  left:0;
   border-bottom: 2px solid grey;
 }
 
-.header-date {
+.div-title-date {
   display: flex;
   width: 75%;
 }
 
-.gastro-message-date {
-  position:absolute;
-  right: 15%;
+.display-entry-title {
+
+}
+
+.display-entry-date {
+ position:absolute;
+ right:20%;
 }
 
 
-.gastro-info-response {
+.div-contact-response {
   display:flex;
 }
 
-.gastro-entry-response {
+.display-entry-response {
   position: absolute;
-  right:30%;
+  left:30%;
   font-style:italic;
 }
-.gastro-message-header {
-}
 
-.gastro-message {
+.display-entry-contact {
 
 }
 
-.message-info {
-}
-
-.message-info-expand {
+.div-entry-contact {
   line-height: 0.6;
 }
 
+.entry-contact-name {
 
-.message-info-expand-email {
+}
+
+.entry-contact-country {
+
+}
+
+.div-contact-hide {
+
+}
+
+.entry-contact-email {
   color: grey;
   cursor: pointer;
-
-}
-
-.message-info:hover, .message-info-expand-email:hover, .gastro-tools-management:hover {
-  color: rgba(130, 130, 130, 0.5);
-  cursor: pointer;
 }
 
 
-/*-------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*Crash Page CSS*/
 
 .crash-image-div {
  position:absolute;
@@ -255,3 +201,110 @@ html, body {
   height:auto;
   content:url("https://s-media-cache-ak0.pinimg.com/originals/b9/df/76/b9df7679d2a2b3fb0016892b0e059aca.png");
 }
+
+
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*BUTTONS*/
+
+.div-right-button {
+  position:absolute;
+  right:0%;
+  width:10%;
+  top:40%;
+  z-index:100;
+}
+
+.right-button-image {
+  width:100%;
+  height:auto;
+  content:url("http://www.clker.com/cliparts/2/9/b/8/1194984775760075334button-green_benji_park_01.svg.hi.png")
+}
+
+.div-left-button {
+  position:absolute;
+  left: 0%;
+  width: 10%;
+  top: 40%;
+  z-index:100;
+}
+
+.left-button-image {
+  width:100%;
+  height:auto;
+  content:url("http://www.clker.com/cliparts/2/9/b/8/1194984775760075334button-green_benji_park_01.svg.hi.png")
+}
+
+.div-input-button {
+  position:absolute;
+  width: 25%;
+  bottom: 5%;
+  left: 30%;
+  z-index:100;
+}
+
+.input-button-image {
+  width:100%;
+  height:auto;
+  content:url("http://vignette1.wikia.nocookie.net/tayothelittlebus/images/9/97/Bob_minions_2015.png/revision/latest?cb=20150807182137");
+}
+
+
+.div-search-icon {
+  width: 10%;
+  position:absolute;
+  right: 5%;
+  top: 20%;
+}
+
+.search-icon-image {
+  width:100%;
+  height:auto;
+  content:url("http://www.imagenspng.com.br/wp-content/uploads/2015/07/minions-09-barba.png");
+}
+
+.div-mainpage-icon {
+  width: 10%;
+  position:absolute;
+  right: 5%;
+  top: 1%;
+}
+
+.mainpage-icon-image {
+  width:100%;
+  height:auto;
+  content:url("http://www.imagenspng.com.br/wp-content/uploads/2015/07/minions-06-anotando.png")
+}
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*Dynamic CSS*/
+.search-icon-image:hover, .left-button-image:hover, .right-button-image:hover, .div-contact-hide:hover, .display-entry-contact:hover, .mainpage-icon-image:hover {
+  color: rgba(130, 130, 130, 0.5);
+  cursor: pointer;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------*/
+/*SEARCH PAGE*/
+
+.div-search-page {
+  position:absolute;
+  width:100%;
+  height:100%;
+}
+
+.search-bar {
+  position:absolute;
+  left:25%;
+  top:4%;
+  height:2%;
+  width:50%;
+}
+
+.div-search-results {
+  position:absolute;
+  background-color: rgba(130, 130, 130, 0.1);
+  width:85%;
+  height:70%;
+  top:10%;
+  left:6%;
+}
+
+

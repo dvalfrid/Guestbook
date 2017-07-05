@@ -20,24 +20,24 @@ function validations(entry) {
 
 $(document).ready(function() {
     //TODO: Load Initial Content
-    //$(".title-text").text(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
-    //$(".page-title").text("Gastolibro");
+    $(".title-text").text(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+    $(".page-title").text("Gastolibro");
 
-    //for(i = 0; i < 10; i++) {
-        //createEntry(entries[0]);
-    //}
-
-    bookId = urlKeys("bookId");
-
-    $.get("/api/books/" + bookId, function(book, status) {  /*Real Code*/
-        $(".title-text").text(book.description);
-        $(".page-title").text(book.title);
-        book.entries.forEach(CreateEntry);
-    });
-
-    if (bookId == null) {
-        crash(0);
+    for(i = 0; i < 10; i++) {
+        createEntry(entries[0]);
     }
+
+    //bookId = urlKeys("bookId");
+
+    //$.get("/api/books/" + bookId, function(book, status) {  [>Real Code<]
+        //$(".page-title").text(book.title);
+        //$(".title-text").text(book.description);
+        //book.entries.forEach(CreateEntry);
+    //});
+
+    //if (bookId == null) {
+        //crash(0);
+    //}
 });
 
 
@@ -81,13 +81,13 @@ function addEntrytoDB(entry) {
 //Scrolling function
 
 $(function($) {
-    $(".gastro-entries").on('scroll', function() {
+    $(".div-entries").on('scroll', function() {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
-            requestEntries(5, entries[-1].id).forEach(createEntry);
+            //requestEntries(5, entries[-1].id).forEach(createEntry);
 
-            //for (i = 0; i < 5; i++) {
-                //createEntry(entries[0]); [>Mock<]
-            //}
+            for (i = 0; i < 5; i++) {
+                createEntry(entries[0]); /*[>Mock<]*/
+            }
         }
     })
 
@@ -105,7 +105,7 @@ function submitHandler() {
 
 function getSubmissionContent() {
     var entry = {};
-    $("form#input-form :input").each(function() {
+    $("form#entry-input :input").each(function() {
         entry[$(this).attr("id")] = $(this).attr("value");
     });
 
@@ -120,17 +120,16 @@ function getSubmissionContent() {
 function createEntry(entry) {
     entries[entry.id] = entry;
 
-    $(".gastro-entries").append(`
-        <div class='gastro-entry'>
-            <div class='header-date'>
-                <h3 class='gastro-message-header'><em>${entry.header}</em></h3>
-                <h5 class='gastro-message-date'>${entry.date}</h5>
+    $(".div-entries").append(`
+        <div class='div-entry'>
+            <div class='div-title-date'>
+                <h3 class='display-entry-title'><em>${entry.header}</em></h3>
+                <h5 class='display-entry-date'>${entry.date}</h5>
             </div>
-            <p class='message'>${entry.message}</p>
-            <p class='gastro-entry-response'>${entry.comment}</p>
-            <div class='gastro-info-response'>
-                <p class='message-info' data-view-state='true' data-id=${entry.id} onclick='loadMessageInfo(this)'>Contact</p>
-                <p class='gastro-entry-response'>${entry.comment}</p>
+            <p class='display-entry-message'>${entry.message}</p>
+            <div class='div-contact-response'>
+                <p class='display-entry-contact' data-view-state='true' data-id=${entry.id} onclick='loadMessageInfo(this)'>Contact</p>
+                <p class='display-entry-response'>${entry.comment}</p>
             </div>
         </div>
       `)
@@ -138,18 +137,18 @@ function createEntry(entry) {
 
 function contactInfoDiv(contactInfo) {
     return `
-        <div class='message-info-expand' data-id=${contactInfo.id} data-view-state='false'>
-            <p class='message-info-expand-name'> name: ${contactInfo.name}</p>
-            <p class='message-info-expand-country'> counter: ${contactInfo.country}</p>
-            <p class='message-info-expand-email' data-email='${contactInfo.email}' onclick='openEmail(this)'> email: ${contactInfo.email} </p>
-            <p class='message-info' onclick='loadMessageInfo(this.parentElement)'>hide</p>
+        <div class='div-entry-contact' data-id=${contactInfo.id} data-view-state='false'>
+            <p class='entry-contact-name'> name: ${contactInfo.name}</p>
+            <p class='entry-contact-country'> counter: ${contactInfo.country}</p>
+            <p class='entry-contact-email' data-email='${contactInfo.email}' onclick='openEmail(this)'> email: ${contactInfo.email} </p>
+            <p class='div-contact-hide' onclick='loadMessageInfo(this.parentElement)'>hide</p>
         </div>
     `
 }
 
 function contactInfoParagraph(contactInfo) {
     return  `
-        <p class='message-info' data-view-state='true' data-id=${contactInfo.id} onclick='loadMessageInfo(this)'>Contact</p>
+        <p class='display-entry-contact' data-view-state='true' data-id=${contactInfo.id} onclick='loadMessageInfo(this)'>Contact</p>
     `
 }
 
@@ -188,16 +187,16 @@ toolsVisible = false; // If it works it ain't stupid #ThugLife
 
 function toolsManagement() {
     if (toolsVisible) {
-        $(".gastro-tools").fadeOut(200);
-        $(".gastro-entries").css("width", "100%");
-        $(".gastro-entries").fadeIn(200)
+        $(".div-entry-input").fadeOut(200);
+        $(".div-entries").css("width", "100%");
+        $(".div-entries").fadeIn(200)
         toolsVisible = false;
     } else {
-        $(".gastro-entries").fadeOut(200);
-        $(".gastro-entries").css("width", "0%");
+        $(".div-entries").fadeOut(200);
+        $(".div-entries").css("width", "0%");
 
-        $(".gastro-tools").fadeIn(200);
-        $(".gastro-tools").css("width", "100%");
+        $(".div-entry-input").fadeIn(199);
+        $(".div-entry-input").css("width", "100%");
         toolsVisible = true;
     }
 
@@ -235,9 +234,9 @@ function redirect(url) {
 //AutoCompletion
 
 
-$(".gastro-tools-search-bar").autocomplete({
-    source:autocompletion
-});
+//$(".gastro-tools-search-bar").autocomplete({
+    //source:autocompletion
+//});
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -248,6 +247,26 @@ var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "Haskell
 
 entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", comment:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
 
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//EVERYTHING SEARCH
+
+mainpage = true;
+function pageHandler() {
+    console.log("HELLO");
+    if(mainpage) {
+        mainpage = false;
+        $(".div-top").fadeOut(200);
+        $(".div-main-content-wrapper").fadeOut(200);
+        $(".div-search-page").fadeIn(400);
+    } else {
+        mainpage = true;
+        $(".div-search-page").fadeOut(200);
+        $(".div-main-content-wrapper").fadeIn(400);
+        $(".div-top").fadeIn(400);
+    }
+}
 
 
 

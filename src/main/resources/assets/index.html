@@ -19,32 +19,39 @@
 </head>
 
 <body>
-  <div class="top-div">
+  <div class="div-top">
     <div class="title-search">
     <h1 class="page-title"></h1>
-      <div class="gastro-tools-search">
-        <input class="gastro-tools-search-bar" type="text" name="search" placeholder="Search..">
-       </div>
+      <div class="div-search-icon">
+        <img class="search-icon-image" onclick="pageHandler()"/>
+      </div>
     </div>
-    <div class="page-title-text-div"> <p class="title-text"> </p> </div>
-    <!--<p class="gastro-tools-management" onclick="toolsManagement()">skriv</p>-->
+    <div class="div-title-text"> <p class="title-text"> </p> </div>
   </div>
 
-  <div class="entry-search-wrapper">
-
-    <div class="gastro-entries">
-      <div class="gastro-right-button"> <img class="gastro-right-button-image" onclick="toolsManagement()"/> </div>
+  <div class="div-main-content-wrapper">
+    <div class="div-entries">
+      <div class="div-right-button"> <img class="right-button-image" onclick="toolsManagement()"/> </div>
     </div>
-    <div class="gastro-tools" id='gastro-tools' style="display:none;">
-    <div class="gastro-left-button"> <img class="gastro-left-button-image" onclick="toolsManagement()"> </div>
-    <div class="gastro-input-button"><img class="gastro-input-button-image" onclick="submitHandler()"> </div>
-      <form class="gastro-tools-input-form" id="input-form">
-          <input class="gastro-tools-input-form-name" id="name" type="text" placeholder="Name"/>
-          <input class="gastro-tools-input-form-email" id="email" type="email" placeholder="Email"/>
-          <input class="gastro-tools-input-form-country" id="country" type="text" placeholder="Country"/>
-          <textarea class="gastro-tools-input-form-message" id="message" placeholder="Leave a message..."></textarea>
+    <div class="div-entry-input" style="display:none;">
+    <div class="div-left-button"> <img class="left-button-image" onclick="toolsManagement()"> </div>
+    <div class="div-input-button"><img class="input-button-image" onclick="submitHandler()"> </div>
+      <form class="form-entry" id="entry-input">
+          <input class="entry-name" id="name" type="text" placeholder="Name"/>
+          <input class="entry-email" id="email" type="email" placeholder="Email"/>
+          <input class="entry-country" id="country" type="text" placeholder="Country"/>
+          <textarea class="entry-message" id="message" placeholder="Leave a message..."></textarea>
       </form>
     </div>
+  </div>
+
+  <div class="div-search-page" style="display:none;">
+    <input type="text" class="search-bar" placeholder="Search...">
+    <div class="div-mainpage-icon">
+      <img class="mainpage-icon-image" onclick="pageHandler()">
+    </div>
+
+    <div class="div-search-results"> </div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
