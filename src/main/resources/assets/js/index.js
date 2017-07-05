@@ -32,7 +32,7 @@ $(document).ready(function() {
     $.get("/api/books/" + bookId, function(book, status) {
         $(".page-title").text(book.title);
         $(".title-text").text(book.description);
-        book.entries.forEach(CreateEntry);
+        book.entries.forEach(createEntry);
     });
 
     if (bookId == null) {
