@@ -107,7 +107,19 @@ html, body {
   height: 8%
 }
 
+.entry-city {
+  margin-bottom: 1%;
+  width: 80%;
+  height: 8%
+}
+
 .entry-country {
+  margin-bottom: 1%;
+  width: 80%;
+  height: 8%
+}
+
+.entry-headline {
   margin-bottom: 1%;
   width: 80%;
   height: 8%

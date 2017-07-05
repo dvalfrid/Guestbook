@@ -83,7 +83,7 @@ function addEntrytoDB(entry) {
 
 $(function($) {
     $(".div-entries").on('scroll', function() {
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) {
             requestEntries(5, entries[-1].id).forEach(createEntry);
 
             //for (i = 0; i < 5; i++) {
@@ -107,7 +107,7 @@ function submitHandler() {
 function getSubmissionContent() {
     var entry = {};
     $("form#entry-input :input").each(function() {
-        entry[$(this).attr("id")] = $(this).attr("value");
+        entry[$(this).attr("id")] = $(this).val();
     });
 
     return entry;
