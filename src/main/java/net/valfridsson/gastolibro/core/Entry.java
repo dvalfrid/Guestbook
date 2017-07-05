@@ -1,6 +1,8 @@
 package net.valfridsson.gastolibro.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -25,9 +27,11 @@ public class Entry {
     @JsonProperty("message")
     public final String message;
     @JsonProperty("date")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public final LocalDateTime createTime;
     @JsonProperty("comment")
     public final String comment;
+    @JsonIgnore
     public final boolean viewAble;
 
     private Entry(Builder builder) {

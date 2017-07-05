@@ -3,14 +3,21 @@ package net.valfridsson.gastolibro.resources;
 import com.google.common.collect.ImmutableMap;
 import io.dropwizard.jersey.params.LongParam;
 import net.valfridsson.gastolibro.GastolibroApplication;
+import net.valfridsson.gastolibro.api.CreateEntry;
 import net.valfridsson.gastolibro.core.Book;
 import net.valfridsson.gastolibro.core.Entry;
 import net.valfridsson.gastolibro.jdbi.BookDao;
 import net.valfridsson.gastolibro.jdbi.EntryDao;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.Optional;
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,6 +29,16 @@ public class BookResource {
 
     public BookResource(GastolibroApplication application) {
         this.application = application;
+    }
+
+    @POST
+    @Path("/entries")
+    public Response create(@PathParam("bookId") LongParam bookId,
+                           @Valid  @NotNull(message = "'Create entry must be set") CreateEntry entry,
+                           @Context HttpServletRequest request) {
+        Entry insert = application.getDbi().onDemand(EntryDao.class).insert(entry, bookId.get(), request.getRemoteAddr());
+
+        return Response.created(URI.create(String.valueOf(insert.id))).build();
     }
 
     @GET
