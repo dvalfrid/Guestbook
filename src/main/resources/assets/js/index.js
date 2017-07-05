@@ -68,6 +68,7 @@ function fuzzySearch(str) {
 }
 
 function addEntrytoDB(entry) {
+    console.log(entry);
     $.post("/api/books/" + bookId + "/entries", entry, function(data, status){
         if (status == 200)
             return true;
