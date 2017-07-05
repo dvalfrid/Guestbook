@@ -20,24 +20,24 @@ function validations(entry) {
 
 $(document).ready(function() {
     //TODO: Load Initial Content
-    $(".title-text").text(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
-    $(".page-title").text("Gastolibro");
+    //$(".title-text").text(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+    //$(".page-title").text("Gastolibro");
 
-    for(i = 0; i < 10; i++) {
-        createEntry(entries[0]);
-    }
-
-    //bookId = urlKeys("bookId");
-
-    //$.get("/api/books/" + bookId, function(book, status) {  [>Real Code<]
-        //$(".page-title").text(book.title);
-        //$(".title-text").text(book.description);
-        //book.entries.forEach(CreateEntry);
-    //});
-
-    //if (bookId == null) {
-        //crash(0);
+    //for(i = 0; i < 10; i++) {
+        //createEntry(entries[0]);
     //}
+
+    bookId = urlKeys("bookId");
+
+    $.get("/api/books/" + bookId, function(book, status) {
+        $(".page-title").text(book.title);
+        $(".title-text").text(book.description);
+        book.entries.forEach(CreateEntry);
+    });
+
+    if (bookId == null) {
+        crash(0);
+    }
 });
 
 
@@ -83,11 +83,11 @@ function addEntrytoDB(entry) {
 $(function($) {
     $(".div-entries").on('scroll', function() {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) { /*Generate Content before it hits bottom*/
-            //requestEntries(5, entries[-1].id).forEach(createEntry);
+            requestEntries(5, entries[-1].id).forEach(createEntry);
 
-            for (i = 0; i < 5; i++) {
-                createEntry(entries[0]); /*[>Mock<]*/
-            }
+            //for (i = 0; i < 5; i++) {
+                //createEntry(entries[0]);
+            //}
         }
     })
 
