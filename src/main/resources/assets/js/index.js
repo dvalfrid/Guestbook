@@ -172,7 +172,6 @@ function crashHtml(string) {
 //Managing the Dynamic content
 
 function loadMessageInfo(contact) {
-
     console.log($(contact).data("id"));
     var entry = entries[$(contact).data("id")];
 
@@ -184,7 +183,6 @@ function loadMessageInfo(contact) {
 }
 
 toolsVisible = false; // If it works it ain't stupid #ThugLife
-
 function toolsManagement() {
     if (toolsVisible) {
         $(".div-entry-input").fadeOut(200);
@@ -195,11 +193,26 @@ function toolsManagement() {
         $(".div-entries").fadeOut(200);
         $(".div-entries").css("width", "0%");
 
-        $(".div-entry-input").fadeIn(199);
+        $(".div-entry-input").fadeIn(200);
         $(".div-entry-input").css("width", "100%");
         toolsVisible = true;
     }
+}
 
+mainpage = true;
+function pageHandler() {
+    console.log("HELLO");
+    if(mainpage) {
+        mainpage = false;
+        $(".div-top").fadeOut(200);
+        $(".div-main-content-wrapper").fadeOut(200);
+        $(".div-search-page").fadeIn(400);
+    } else {
+        mainpage = true;
+        $(".div-search-page").fadeOut(200);
+        $(".div-main-content-wrapper").fadeIn(400);
+        $(".div-top").fadeIn(400);
+    }
 }
 
 function crash(code) {
@@ -252,21 +265,6 @@ entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", co
 //--------------------------------------------------------------------------------------------------------------------------------------------
 //EVERYTHING SEARCH
 
-mainpage = true;
-function pageHandler() {
-    console.log("HELLO");
-    if(mainpage) {
-        mainpage = false;
-        $(".div-top").fadeOut(200);
-        $(".div-main-content-wrapper").fadeOut(200);
-        $(".div-search-page").fadeIn(400);
-    } else {
-        mainpage = true;
-        $(".div-search-page").fadeOut(200);
-        $(".div-main-content-wrapper").fadeIn(400);
-        $(".div-top").fadeIn(400);
-    }
-}
 
 
 
