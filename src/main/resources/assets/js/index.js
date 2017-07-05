@@ -138,8 +138,7 @@ function createEntry(entry) {
 function contactInfoDiv(contactInfo) {
     return `
         <div class='div-entry-contact' data-id=${contactInfo.id} data-view-state='false'>
-            <p class='entry-contact-name'> name: ${contactInfo.name}</p>
-            <p class='entry-contact-country'> counter: ${contactInfo.country}</p>
+            <p class='entry-contact-country'> country: ${contactInfo.country}</p>
             <p class='entry-contact-email' data-email='${contactInfo.email}' onclick='openEmail(this)'> email: ${contactInfo.email} </p>
             <p class='div-contact-hide' onclick='loadMessageInfo(this.parentElement)'>hide</p>
         </div>
@@ -148,7 +147,7 @@ function contactInfoDiv(contactInfo) {
 
 function contactInfoParagraph(contactInfo) {
     return  `
-        <p class='display-entry-contact' data-view-state='true' data-id=${contactInfo.id} onclick='loadMessageInfo(this)'>Contact</p>
+        <p class='display-entry-contact' data-view-state='true' data-id=${contactInfo.id} onclick='loadMessageInfo(this)'>${contactInfo.name}</p>
     `
 }
 
