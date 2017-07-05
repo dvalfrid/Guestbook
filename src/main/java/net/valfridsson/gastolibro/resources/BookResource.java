@@ -17,7 +17,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.net.URI;
 import java.util.Optional;
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -35,10 +34,10 @@ public class BookResource {
     @Path("/entries")
     public Response create(@PathParam("bookId") LongParam bookId,
                            @Valid  @NotNull(message = "'Create entry must be set") CreateEntry entry,
-                           @Context HttpServletRequest request) {
+                           @Context HttpServletRequest request,
+                           @Context UriInfo uriInfo) {
         Entry insert = application.getDbi().onDemand(EntryDao.class).insert(entry, bookId.get(), request.getRemoteAddr());
-
-        return Response.created(URI.create(String.valueOf(insert.id))).build();
+        return Response.created(uriInfo.getAbsolutePathBuilder().path(Long.toString(insert.id)).build()).build();
     }
 
     @GET
