@@ -120,6 +120,10 @@ function getSubmissionContent() {
 function createEntry(entry) {
     entries[entry.id] = entry;
 
+    if (entry.comment == null) {
+        entry.comment = "";
+    }
+
     $(".div-entries").append(`
         <div class='div-entry'>
             <div class='div-title-date'>
