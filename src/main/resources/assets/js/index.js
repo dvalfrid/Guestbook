@@ -128,7 +128,7 @@ function createEntry(entry) {
             </div>
             <p class='display-entry-message'>${entry.message}</p>
             <div class='div-contact-response'>
-                <p class='display-entry-contact' data-view-state='true' data-id=${entry.id} onclick='loadMessageInfo(this)'>Contact</p>
+                <p class='display-entry-contact' data-view-state='true' data-id=${entry.id} onclick='loadMessageInfo(this)'>${entry.name}</p>
                 <p class='display-entry-response'>${entry.comment}</p>
             </div>
         </div>
