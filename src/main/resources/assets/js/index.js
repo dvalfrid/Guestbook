@@ -1,6 +1,13 @@
-
+//Global Variables
 var bookId;
 var entries = {};
+var countries = ["sweden", "swizz", "sri lanka", "s00perLand", "super marioland"];
+var cities = ["derpington", "rainbowislands"];
+var emailRegex = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+
+//Mock Data
+entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", comment:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
+
 
 //Parsing Queries
 function urlKeys(key) {
@@ -10,16 +17,12 @@ function urlKeys(key) {
 }
 
 //TODO: Make sure input is correctly formated. NEED to choose a mail REGEX
-function validations(entry) {
-    return true;
-}
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 //ONLOAD Functions
 
 $(document).ready(function() {
-    //TODO: Load Initial Content
     //$(".title-text").text(" Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
     //$(".page-title").text("Gastolibro");
 
@@ -33,6 +36,7 @@ $(document).ready(function() {
         $(".page-title").text(book.title);
         $(".title-text").text(book.description);
         book.entries.forEach(createEntry);
+        countries = book.countries;
     });
 
     if (bookId == null) {
@@ -65,6 +69,12 @@ function fuzzySearch(str) {
         function ( objects ) {
             return objects;
         });
+}
+
+function requestCities(country) {
+    return $.get("api/books/" + bookId + "/search/?country=" + country, function (objects){
+        return objects;
+    });
 }
 
 function addEntrytoDB(entry) {
@@ -103,6 +113,8 @@ $(function($) {
 //Adding Entry
 function submitHandler() {
     entry = getSubmissionContent();
+
+    removeErrors();
 
     if (validations(entry)) {
         addEntrytoDB(entry);
@@ -174,6 +186,10 @@ function crashHtml(string) {
         </div>
     </body>
  `
+}
+
+function email_error(msg) {
+    return ` <p class="email-error">${msg}</p> `
 }
 
 
@@ -253,9 +269,66 @@ function redirect(url) {
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
+//INPUT
+
+function removeErrors() {
+    $(".form-entry").children().removeClass("input-error");
+}
+
+function validations(entry) {
+    validation = true;
+    if (entry.email.match(emailRegex) == null) {
+        $(".entry-email").addClass("input-error");
+        validation = false;
+    }
+
+    if (entry.name == "") {
+        $(".entry-name").addClass("input-error");
+        validation = false;
+    }
+
+    if (entry.country == "") {
+        $(".entry-country").addClass("input-error");
+        validation = false;
+    }
+
+    if (entry.city == "") {
+        $(".entry-city").addClass("input-error");
+        validation = false;
+    }
+
+    if (entry.headline == "") {
+        $(".entry-headline").addClass("input-error");
+        validation = false;
+    }
+
+    if (entry.message == "") {
+        $(".entry-message").addClass("input-error");
+        validation = false;
+    }
+
+    return validation;
+
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
 
 //AutoCompletion
 
+$(".entry-city").focus(function() {
+    country = $(".entry-country").val();
+    if (country != "") {
+        cities = requestCities(country);
+    }
+});
+
+$(".entry-country").autocomplete({
+    source: countries
+});
+
+$(".entry-city").autocomplete({
+    source: cities
+})
 
 //$(".gastro-tools-search-bar").autocomplete({
     //source:autocompletion
@@ -264,11 +337,6 @@ function redirect(url) {
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 
-//Mock Data
-
-var autocompletion = ["gastrolibro", "ranodom", "javaisNotAsCoolAsC++", "HaskellIsWierd"];
-
-entries[0] = {name:"mr smith", country:"sweden" ,email:"Cool@s00permail.com", comment:"Coolaste inlägget ever!", date:"1337-12-13 13:37", id:"0", header:"S00perDynamicHeader", message:"AS000000perDynamicMessage"};
 
 
 
