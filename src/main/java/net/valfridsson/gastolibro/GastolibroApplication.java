@@ -34,10 +34,7 @@ public class GastolibroApplication extends Application<GastolibroConfiguration> 
           return configuration.getDatabase();
           }
           });
-
       bootstrap.addBundle(new AssetsBundle("/assets", "/", "index.html", "home"));
-
-
     }
 
   @Override
