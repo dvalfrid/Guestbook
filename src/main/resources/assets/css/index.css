@@ -293,7 +293,7 @@ html, body {
 }
 /*-------------------------------------------------------------------------------------------------------------------*/
 /*Dynamic CSS*/
-.search-icon-image:hover, .left-button-image:hover, .right-button-image:hover, .div-contact-hide:hover, .display-entry-contact:hover, .mainpage-icon-image:hover {
+.search-icon-image:hover, .left-button-image:hover, .right-button-image:hover, .div-contact-hide:hover, .display-entry-contact:hover, .mainpage-icon-image:hover, .div-input-button:hover {
   color: rgba(130, 130, 130, 0.5);
   cursor: pointer;
 }

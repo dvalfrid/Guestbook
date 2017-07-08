@@ -27,7 +27,7 @@ $(document).ready(function() {
     //$(".page-title").text("Gastolibro");
 
     //for(i = 0; i < 10; i++) {
-        //createEntry(entries[0]);
+        //loadMainPageEntry(entries[0]);
     //}
 
     bookId = urlKeys("bookId");
@@ -35,7 +35,7 @@ $(document).ready(function() {
     $.get("/api/books/" + bookId, function(book, status) {
         $(".page-title").text(book.title);
         $(".title-text").text(book.description);
-        book.entries.forEach(createEntry);
+        book.entries.forEach(loadMainPageEntry);
         countries = book.countries;
     });
 
@@ -43,7 +43,6 @@ $(document).ready(function() {
         crash(0);
     }
 });
-
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
@@ -65,6 +64,11 @@ function requestEntry(entryId) {
 }
 
 function fuzzySearch(str) {
+    //searchMock = {};
+    //searchMock["entries"] = [entries[0], entries[0]];
+    //searchMock["suggestions"] = ["s00percool", "s0percool"];
+    //return searchMock;
+
     return $.get("/api/books/" + bookId + "/search/?snippet=" + str,
         function ( objects ) {
             return objects;
@@ -100,10 +104,10 @@ function addEntrytoDB(entry) {
 $(function($) {
     $(".div-entries").on('scroll', function() {
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) {
-            requestEntries(5, entries[-1].id).forEach(createEntry);
+            requestEntries(5, entries[-1].id).forEach(loadMainPageEntry);
 
             //for (i = 0; i < 5; i++) {
-                //createEntry(entries[0]);
+                //loadMainPageEntry(entries[0]);
             //}
         }
     })
@@ -118,7 +122,7 @@ function submitHandler() {
 
     if (validations(entry)) {
         addEntrytoDB(entry);
-        //location.reload(); //Reload content to view input
+        location.reload(); //Reload content to view input
     }
 }
 
@@ -137,13 +141,12 @@ function getSubmissionContent() {
 //DYNAMIC CONTENT
 
 function createEntry(entry) {
-    entries[entry.id] = entry;
 
     if (entry.comment == null) {
         entry.comment = "";
     }
 
-    $(".div-entries").append(`
+    return `
         <div class='div-entry'>
             <div class='div-title-date'>
                 <h3 class='display-entry-title'><em>${entry.header}</em></h3>
@@ -155,7 +158,7 @@ function createEntry(entry) {
                 <p class='display-entry-response'>${entry.comment}</p>
             </div>
         </div>
-      `)
+      `
 }
 
 function contactInfoDiv(contactInfo) {
@@ -188,17 +191,27 @@ function crashHtml(string) {
  `
 }
 
-function email_error(msg) {
-    return ` <p class="email-error">${msg}</p> `
-}
-
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
 //Managing the Dynamic content
 
+function clearChildren(element) {
+    while(element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
+function loadSearchPageEntry(entry) {
+    $(".div-search-results").append(createEntry(entry));
+}
+
+function loadMainPageEntry(entry) {
+    entries[entry.id] = entry;
+    $(".div-entries").append(createEntry(entry));
+}
+
 function loadMessageInfo(contact) {
-    console.log($(contact).data("id"));
     var entry = entries[$(contact).data("id")];
 
     if ($(contact).data("view-state")) {
@@ -227,7 +240,6 @@ function toolsManagement() {
 
 mainpage = true;
 function pageHandler() {
-    console.log("HELLO");
     if(mainpage) {
         mainpage = false;
         $(".div-top").fadeOut(200);
@@ -313,7 +325,7 @@ function validations(entry) {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
 
-//AutoCompletion
+//autocompletion
 
 $(".entry-city").focus(function() {
     country = $(".entry-country").val();
@@ -329,6 +341,39 @@ $(".entry-country").autocomplete({
 $(".entry-city").autocomplete({
     source: cities
 })
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+//Search-Page
+function __highlight(s, t) {
+  var matcher = new RegExp("("+$.ui.autocomplete.escapeRegex(t)+")", "ig" );
+  return s.replace(matcher, "<strong>$1</strong>");
+}
+
+$(function() {
+
+
+
+
+    $(".search-bar").autocomplete({
+        source: function(request, response) {
+            clearChildren(document.getElementById("search-results"));
+            entry_autocompl_sugg = fuzzySearch(request.term);
+            entry_autocompl_sugg["entries"].forEach(loadSearchPageEntry);
+
+            response($.map(entry_autocompl_sugg["suggestions"], function(suggestion) {
+                console.log(suggestion);
+                return {
+                    label: suggestion, /*TODO: FIX HIGHLIGHT*/
+                    value: suggestion
+                };
+            }));
+        },
+
+        minLength: 2
+    })
+});
+
+
 
 //$(".gastro-tools-search-bar").autocomplete({
     //source:autocompletion
