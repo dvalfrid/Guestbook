@@ -1,0 +1,27 @@
+{
+  "name": "gastosite",
+  "version": "1.0.0",
+  "description": "front-end for gastosite",
+  "main": "./assets/js/index.js",
+  "scripts": {
+    "test": "echo 'no tests available'",
+    "build": "node_modules/.bin/webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvalfrid/gastolibro.git"
+  },
+  "keywords": [
+    "non"
+  ],
+  "author": "Jonas Valfridsson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dvalfrid/gastolibro/issues"
+  },
+  "homepage": "https://github.com/dvalfrid/gastolibro#readme",
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "webpack": "^3.1.0"
+  }
+}

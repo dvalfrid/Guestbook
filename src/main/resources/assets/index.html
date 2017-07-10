@@ -12,7 +12,6 @@
   <meta name="author" content="">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link href="css/index.css" rel="stylesheet" type="text/css">
-  <script src='http://127.0.0.1:9003/js/socket.js' type="text/javascript">
 </script>
 
   <title>Gastolibro</title>
@@ -21,22 +20,20 @@
 
 <body>
   <div class="div-top">
-    <div class="title-search">
     <h1 class="page-title"></h1>
       <div class="div-search-icon">
-        <img class="search-icon-image" onclick="pageHandler()"/>
+        <img class="search-icon-image"/>
       </div>
-    </div>
     <div class="div-title-text"> <p class="title-text"> </p> </div>
   </div>
 
   <div class="div-main-content-wrapper">
     <div class="div-entries">
-      <div class="div-right-button"> <img class="right-button-image" onclick="toolsManagement()"/> </div>
+      <div class="div-right-button"> <img class="right-button-image"/> </div>
     </div>
     <div class="div-entry-input" style="display:none;">
-    <div class="div-left-button"> <img class="left-button-image" onclick="toolsManagement()"> </div>
-    <div class="div-input-button"><img class="input-button-image" onclick="submitHandler()"> </div>
+    <div class="div-left-button"> <img class="left-button-image"> </div>
+    <div class="div-input-button"><img class="input-button-image"> </div>
       <form class="form-entry" id="entry-input">
           <input class="entry-name" id="name" type="text" placeholder="Name"/>
           <input class="entry-email" id="email" type="email" placeholder="Email"/>
@@ -51,7 +48,7 @@
   <div class="div-search-page" style="display:none;">
     <input type="text" class="search-bar" placeholder="Search...">
     <div class="div-mainpage-icon">
-      <img class="mainpage-icon-image" onclick="pageHandler()">
+      <img class="mainpage-icon-image" ">
     </div>
 
     <div class="div-search-results" id="search-results"> </div>

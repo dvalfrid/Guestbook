@@ -18,26 +18,29 @@ html, body {
   /*background-color: rgba(130, 130, 130, 0.1);*/
   position:absolute;
   width: 100%;
-  z-index: 0;
+  z-index: 100;
   text-align:center;
-  height: 20%;
+  height: 30%;
   border-radius: 10%;
   overflow:hidden;
 }
 
 .page-title {
+  position:absolute;
   width: 100%;
+  top: 0%;
 }
 
 .div-title-text {
   position:absolute;
-  top: 30%;
+  top: 25%;
   width: 70%;
   left:15%;
+  overflow:auto;
 }
 
 .title-text {
-  color: (230, 230, 230);
+  color: (2, 230, 230);
 }
 
 .title-search {
@@ -54,11 +57,11 @@ html, body {
 
 
 .div-main-content-wrapper {
-  height: 80%;
+  height: 70%;
   width: 98%;
   display: flex;
   position:absolute;
-  top:20%;
+  top:30%;
   right: 1%;
 }
 
@@ -171,8 +174,8 @@ html, body {
 }
 
 .display-entry-response {
-  position: absolute;
-  left:30%;
+  position: relative;
+  left:5%;
   font-style:italic;
 }
 
@@ -271,6 +274,7 @@ html, body {
   position:absolute;
   right: 5%;
   top: 20%;
+  z-index:100;
 }
 
 .search-icon-image {
