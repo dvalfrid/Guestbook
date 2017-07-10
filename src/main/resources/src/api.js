@@ -31,13 +31,13 @@ exports.fuzzySearch = function(str) {
 }
 
 exports.requesCountries = function() {
-    return $.get("api/countries", function(objects) {
+    return $.get("/api/countries", function(objects) {
         return objects;
     });
 }
 
 exports.requestCities = function(config, country) {
-    return $.get("api/books/" + utils.urlKeys("bookId") + "/search/?country=" + country, function (objects){
+    return $.get("/api/?country=" + country, function (objects){
         return objects;
     });
 }
