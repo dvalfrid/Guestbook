@@ -1,7 +1,7 @@
 var utils = require("./utilities");
 
 var exports = module.exports = {};
-
+/*
 exports.requestBookContent = function() {
     return $.get("/api/books" + utils.urlKeys("bookId"), function(book) {
         return book;
@@ -30,7 +30,7 @@ exports.fuzzySearch = function(str) {
         });
 }
 
-exports.requesCountries = function() {
+exports.requestCountries = function() {
     return $.get("/api/countries", function(objects) {
         return objects;
     });
@@ -56,4 +56,37 @@ exports.addEntrytoDB = function(config, entry) {
     contentType: "application/json",
     dataType: 'json'
     })
+}
+
+*/ 
+
+//MOCK STARTS HERE, COMMENT THIS OUT FOR REAL TESTING
+var mock = require("./mock");
+
+exports.requestBookContent = function() {
+    return mock.book;
+}
+
+exports.requestEntries = function(numberOfEntries, oldestEntryId) {
+    return mock.entries;
+}
+
+exports.requestEntry = function(entryId) {
+    return mock.entry;
+}
+
+exports.fuzzySearch = function(str) {
+    return mock.fuzzySearch;
+}
+
+exports.requestCountries = function() {
+    return mock.countries;
+}
+
+exports.requestCities = function(config, country) {
+    return mock.cities;
+}
+
+exports.addEntrytoDB = function(config, entry) {
+    window.alert("Totally inserted something right now.");
 }

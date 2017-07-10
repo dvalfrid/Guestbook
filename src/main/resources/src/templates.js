@@ -6,7 +6,7 @@ exports.createEntry = function(entry) {
     }
 
     return `
-        <div class='div-entry'>
+        <div class='div-entry' id=${entry.id}>
             <div class='div-title-date'>
                 <h3 class='display-entry-title'><em>${entry.header}</em></h3>
                 <h5 class='display-entry-date'>${entry.date}</h5>
@@ -14,9 +14,9 @@ exports.createEntry = function(entry) {
             <p class='display-entry-message'>${entry.message}</p>
             <div class='div-contact-response'>
                 <div class='div-entry-contact'>
-                    <p class='entry-contact-name'> name: ${entry.name} </p>
-                    <p class='entry-contact-country'> country: ${entry.country}</p>
-                    <p class='entry-contact-email' data-email='${entry.email}'> email: ${entry.email} </p>
+                    <p class='entry-contact-name'>${entry.name}</p>
+                    <p class='entry-contact-country'>${entry.country}</p>
+                    <p class='entry-contact-email' data-email='${entry.email}'>${entry.email}</p>
                 </div>
                 <p class='display-entry-response'>${entry.comment}</p>
             </div>

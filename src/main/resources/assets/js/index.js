@@ -129,118 +129,10 @@ exports.loadMainPageEntry = function(entry) {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var utils = __webpack_require__(0);
-
-var exports = module.exports = {};
-
-exports.requestBookContent = function() {
-    return $.get("/api/books" + utils.urlKeys("bookId"), function(book) {
-        return book;
-    })
-}
-
-exports.requestEntries = function(numberOfEntries, oldestEntryId) {
-    return $.get("/api/books/" + utils.urlKeys("bookId") + "/entries/" + "?numberOfEntries=" + numberOfEntries  + "&?afterId=" + oldestEntryId,
-        function( entries ) {
-            return entries;
-        });
-}
-
-exports.requestEntry = function(entryId) {
-    return $.get("/api/books/" + utils.urlKeys("bookId") + "entries/" + entryId,
-        function ( entry ) {
-            return entry;
-        });
-}
-
-exports.fuzzySearch = function(str) {
-   return $.get("/api/books/" + utils.urlKeys("bookId") + "/search/?snippet=" + str,
-
-        function ( objects ) {
-            return objects;
-        });
-}
-
-exports.requesCountries = function() {
-    return $.get("api/countries", function(objects) {
-        return objects;
-    });
-}
-
-exports.requestCities = function(config, country) {
-    return $.get("api/books/" + utils.urlKeys("bookId") + "/search/?country=" + country, function (objects){
-        return objects;
-    });
-}
-
-exports.addEntrytoDB = function(config, entry) {
-    $.ajax({
-    type: "POST",
-    url: "/api/books/" + utils.urlKeys("bookId") + "/entries",
-    data: JSON.stringify(entry),
-    success: function(data, status) {
-        if (status == 201)
-            return true;
-        else
-            return false;
-    },
-    contentType: "application/json",
-    dataType: 'json'
-    })
-}
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-var exports = module.exports = {};
-exports.createEntry = function(entry) {
-
-    if (entry.comment == null) {
-        entry.comment = "";
-    }
-
-    return `
-        <div class='div-entry'>
-            <div class='div-title-date'>
-                <h3 class='display-entry-title'><em>${entry.header}</em></h3>
-                <h5 class='display-entry-date'>${entry.date}</h5>
-            </div>
-            <p class='display-entry-message'>${entry.message}</p>
-            <div class='div-contact-response'>
-                <div class='div-entry-contact'>
-                    <p class='entry-contact-name'> name: ${entry.name} </p>
-                    <p class='entry-contact-country'> country: ${entry.country}</p>
-                    <p class='entry-contact-email' data-email='${entry.email}'> email: ${entry.email} </p>
-                </div>
-                <p class='display-entry-response'>${entry.comment}</p>
-            </div>
-        </div>
-      `
-}
-
-exports.crashHtml = function(string) {
- return `
-    <head>
-      <link href="css/index.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <p>${string}</p>
-        <div class='crash-image-div'>
-            <img class='crash-image'>
-        </div>
-    </body>
- `
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var utilities = __webpack_require__ (0);
 var validations = __webpack_require__ (5);
 var templates = __webpack_require__ (2);
-var api = __webpack_require__ (1);
+var api = __webpack_require__ (3);
 
 var entries = [];
 $(document).ready(function() {
@@ -248,10 +140,11 @@ $(document).ready(function() {
         book = api.requestBookContent();
         $(".page-title").text(book.title);
         $(".title-text").text(book.description);
-        book.entries.forEach(dyncont.loadMainPageEntry);
+        book.entries.forEach(utilities.loadMainPageEntry);
 
         entries = book.entries;
     } catch(err) {
+        console.log(err);
         utilities.crash(0);
     }
 });
@@ -297,14 +190,13 @@ $(".div-mainpage-icon").on('click', function() {
     $(".div-top").fadeIn(400);
 })
 
-$(function($) {
-    $(".div-entries").on('scroll', function() {
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) {
-            requestEntries(5, entries[-1].id).forEach(utilities.loadMainPageEntry);
-        }
-    })
+$(".div-entries").on('scroll', function() {
+    if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 100) {
+        recent_entry_id = document.getElementById("entries").lastElementChild.getAttribute("id");
+        api.requestEntries(5, recent_entry_id).forEach(utilities.loadMainPageEntry);
+    }
+})
 
-});
 
 
 
@@ -313,13 +205,152 @@ $(function($) {
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var exports = module.exports = {};
+exports.createEntry = function(entry) {
+
+    if (entry.comment == null) {
+        entry.comment = "";
+    }
+
+    return `
+        <div class='div-entry' id=${entry.id}>
+            <div class='div-title-date'>
+                <h3 class='display-entry-title'><em>${entry.header}</em></h3>
+                <h5 class='display-entry-date'>${entry.date}</h5>
+            </div>
+            <p class='display-entry-message'>${entry.message}</p>
+            <div class='div-contact-response'>
+                <div class='div-entry-contact'>
+                    <p class='entry-contact-name'>${entry.name}</p>
+                    <p class='entry-contact-country'>${entry.country}</p>
+                    <p class='entry-contact-email' data-email='${entry.email}'>${entry.email}</p>
+                </div>
+                <p class='display-entry-response'>${entry.comment}</p>
+            </div>
+        </div>
+      `
+}
+
+exports.crashHtml = function(string) {
+ return `
+    <head>
+      <link href="css/index.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <p>${string}</p>
+        <div class='crash-image-div'>
+            <img class='crash-image'>
+        </div>
+    </body>
+ `
+}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var utils = __webpack_require__(0);
+
+var exports = module.exports = {};
+/*
+exports.requestBookContent = function() {
+    return $.get("/api/books" + utils.urlKeys("bookId"), function(book) {
+        return book;
+    })
+}
+
+exports.requestEntries = function(numberOfEntries, oldestEntryId) {
+    return $.get("/api/books/" + utils.urlKeys("bookId") + "/entries/" + "?numberOfEntries=" + numberOfEntries  + "&?afterId=" + oldestEntryId,
+        function( entries ) {
+            return entries;
+        });
+}
+
+exports.requestEntry = function(entryId) {
+    return $.get("/api/books/" + utils.urlKeys("bookId") + "entries/" + entryId,
+        function ( entry ) {
+            return entry;
+        });
+}
+
+exports.fuzzySearch = function(str) {
+   return $.get("/api/books/" + utils.urlKeys("bookId") + "/search/?snippet=" + str,
+
+        function ( objects ) {
+            return objects;
+        });
+}
+
+exports.requestCountries = function() {
+    return $.get("/api/countries", function(objects) {
+        return objects;
+    });
+}
+
+exports.requestCities = function(config, country) {
+    return $.get("/api/?country=" + country, function (objects){
+        return objects;
+    });
+}
+
+exports.addEntrytoDB = function(config, entry) {
+    $.ajax({
+    type: "POST",
+    url: "/api/books/" + utils.urlKeys("bookId") + "/entries",
+    data: JSON.stringify(entry),
+    success: function(data, status) {
+        if (status == 201)
+            return true;
+        else
+            return false;
+    },
+    contentType: "application/json",
+    dataType: 'json'
+    })
+}
+
+*/ 
+
+//MOCK STARTS HERE, COMMENT THIS OUT FOR REAL TESTING
+var mock = __webpack_require__(7);
+
+exports.requestBookContent = function() {
+    return mock.book;
+}
+
+exports.requestEntries = function(numberOfEntries, oldestEntryId) {
+    return mock.entries;
+}
+
+exports.requestEntry = function(entryId) {
+    return mock.entry;
+}
+
+exports.fuzzySearch = function(str) {
+    return mock.fuzzySearch;
+}
+
+exports.requestCountries = function() {
+    return mock.countries;
+}
+
+exports.requestCities = function(config, country) {
+    return mock.cities;
+}
+
+exports.addEntrytoDB = function(config, entry) {
+    window.alert("Totally inserted something right now.");
+}
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__ (1)
-__webpack_require__ (0);
-__webpack_require__ (3);
-__webpack_require__ (7);
+__webpack_require__ (1);
+__webpack_require__ (8);
 
 
 
@@ -393,10 +424,52 @@ module.exports = {
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports) {
+
+var entry = {
+    name:"mr smith", 
+    country:"sweden" ,
+    email:"Cool@s00permail.com", 
+    id:"0",
+    header: "S00perHeader",
+    date: "1970:00:00",
+    message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    comment: "that's a great entry, i really like that entry, please more like these entries"
+};
+
+var entries = [];
+
+for (i = 0; i < 10; i++) {
+    entries[i] = entry;
+}
+
+module.exports = {
+    book: book = {
+        id: 7,
+        entries:entries,
+        title:"Gastolibro",
+        description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    },
+
+    countries: ["sweden", "swiss", "islamabad", "cookieland"],
+    cities: ["stockholm", "luleå", "kiruna"],
+
+    entries:entries,
+
+    fuzzySearch:"You're bad and you should feel bad.",
+
+    entry:entry
+
+
+
+}
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var api = __webpack_require__(1);
-var dyncont = __webpack_require__(3);
+var api = __webpack_require__(3);
+var dyncont = __webpack_require__(1);
 var utils = __webpack_require__(0);
 
 var cities = [];

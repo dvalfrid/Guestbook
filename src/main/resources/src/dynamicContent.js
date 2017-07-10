@@ -9,10 +9,11 @@ $(document).ready(function() {
         book = api.requestBookContent();
         $(".page-title").text(book.title);
         $(".title-text").text(book.description);
-        book.entries.forEach(dyncont.loadMainPageEntry);
+        book.entries.forEach(utilities.loadMainPageEntry);
 
         entries = book.entries;
     } catch(err) {
+        console.log(err);
         utilities.crash(0);
     }
 });
@@ -58,14 +59,13 @@ $(".div-mainpage-icon").on('click', function() {
     $(".div-top").fadeIn(400);
 })
 
-$(function($) {
-    $(".div-entries").on('scroll', function() {
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 60) {
-            requestEntries(5, entries[-1].id).forEach(utilities.loadMainPageEntry);
-        }
-    })
+$(".div-entries").on('scroll', function() {
+    if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight - 100) {
+        recent_entry_id = document.getElementById("entries").lastElementChild.getAttribute("id");
+        api.requestEntries(5, recent_entry_id).forEach(utilities.loadMainPageEntry);
+    }
+})
 
-});
 
 
 
