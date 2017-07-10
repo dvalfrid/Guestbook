@@ -3,3 +3,10 @@
 target/
 /dependency-reduced-pom.xml
 *.iml
+*.swp
+*.java.swp
+tags
+.classpath
+.project
+.settings/
+.vscode/
