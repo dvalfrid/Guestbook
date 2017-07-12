@@ -2,22 +2,15 @@ var api = require("./api");
 var dyncont = require("./dynamicContent");
 var utils = require("./utilities");
 
-var cities = [];
-var countries = [];
-$(document).ready(function() {
-    countries = api.requesCountries;
-})
-
 $(function() {
 
-    $(".search-bar").autocomplete({
+    $("#search-bar").autocomplete({
         source: function(request, response) {
             utils.clearChildren(document.getElementById("search-results"));
             entry_autocompl_sugg = api.fuzzySearch(request.term);
-            entry_autocompl_sugg["entries"].forEach(dyncont.loadSearchPageEntry);
+            entry_autocompl_sugg["entries"].forEach(utils.loadSearchPageEntry);
 
             response($.map(entry_autocompl_sugg["suggestions"], function(suggestion) {
-                console.log(suggestion);
                 return {
                     label: suggestion, /*TODO: FIX HIGHLIGHT*/
                     value: suggestion
@@ -25,21 +18,26 @@ $(function() {
             }));
         },
 
-        minLength: 2
+        minLength: 2,
+        autoFocus: true
     })
 });
 
-$(".entry-city").focus(function() {
-    country = $(".entry-country").val();
-    if (country != "") {
-        cities = api.requestCities(country);
-    }
+var country;
+$("#city").focus(function() {
+    country = $("#country").val();
 });
 
-$(".entry-country").autocomplete({
-    source: countries
+$("#country").autocomplete({
+    source: function(request, response) {
+        response(api.requestCountries(request));
+    },
+    autoFocus: true
 });
 
-$(".entry-city").autocomplete({
-    source: cities
+$("#city").autocomplete({
+    source: function(request, response) {
+        response(api.requestCities(request, country))
+    },
+    autoFocus: true
 })

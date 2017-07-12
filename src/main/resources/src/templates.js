@@ -24,6 +24,29 @@ exports.createEntry = function(entry) {
       `
 }
 
+exports.submit_popup = function(message) {
+    var popup = {
+        classes: "popup-submit-position popup-submit-design",
+        innerElements: ` <p id="sumbit-text">${message}</p> `
+    }
+    return popup;
+    
+}
+
+exports.captcha_popup = function(captcha) {
+    var popup = { 
+        classes: "popup-captcha-position popup-captcha-design",
+        innerElements: `
+        <div class="div-captcha-image">
+            <img src="${captcha.url}" style="width:100%; heigth:auto;"/>
+        </div>
+        <input type="text" class="input-captcha" id="input-captcha" data-id=${captcha.id} placeholder="U a Bot??"/>
+    `
+    }
+
+   return popup; 
+}
+
 exports.crashHtml = function(string) {
  return `
     <head>

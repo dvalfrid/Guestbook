@@ -1,4 +1,5 @@
 var config = require("./config");
+var api = require ("./api");
 
 module.exports = {
      entry:  function(entry) {
@@ -35,5 +36,15 @@ module.exports = {
 
         return validation;
 
+    },
+
+    captcha: function(response, id) {
+        if (api.submissionVerification(response, id)) {
+            return true;
+        } else {
+            $(".div-captcha-image").addClass("input-error");
+            return false;
+        }
     }
 }
+

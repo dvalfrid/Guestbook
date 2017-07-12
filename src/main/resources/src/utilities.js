@@ -1,6 +1,12 @@
 var templates = require("./templates");
 var exports = module.exports = {};
 
+function clearChildren(element) {
+    while(element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
 exports.urlKeys = function(key) {
     key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
     var match = location.search.match(new RegExp("[?&]"+key+"=([^&]+)(&|$)"));
@@ -23,11 +29,8 @@ exports.redirect = function(url) {
     window.location.replace(url);
 }
 
-exports.clearChildren = function(element) {
-    while(element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
-}
+exports.clearChildren = clearChildren;
+
 
 exports.getSubmissionContent = function() {
     var entry = {};
@@ -54,4 +57,13 @@ exports.loadSearchPageEntry = function(entry) {
 
 exports.loadMainPageEntry = function(entry) {
     $(".div-entries").append(templates.createEntry(entry));
+}
+
+exports.animate_popup = function(popup) {
+    clearChildren(document.getElementById("popup"));
+    $("#popup").removeClass();
+
+    $("#popup").addClass(popup.classes);
+    $("#popup").append(popup.innerElements);
+    $("#popup").fadeIn(300).delay(5000).fadeOut(300);
 }

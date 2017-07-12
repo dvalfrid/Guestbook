@@ -30,19 +30,19 @@ exports.fuzzySearch = function(str) {
         });
 }
 
-exports.requestCountries = function() {
-    return $.get("/api/countries", function(objects) {
+exports.requestCountries = function(term) {
+    return $.get("/api/countries?term=" + term, function(objects) {
         return objects;
     });
 }
 
-exports.requestCities = function(config, country) {
-    return $.get("/api/?country=" + country, function (objects){
+exports.requestCities = function(term, country) {
+    return $.get("/api/cities?country=" + country + "&term=" + term, function (objects){
         return objects;
     });
 }
 
-exports.addEntrytoDB = function(config, entry) {
+exports.addEntrytoDB = function(entry) {
     $.ajax({
     type: "POST",
     url: "/api/books/" + utils.urlKeys("bookId") + "/entries",
@@ -79,14 +79,43 @@ exports.fuzzySearch = function(str) {
     return mock.fuzzySearch;
 }
 
-exports.requestCountries = function() {
+exports.requestCountries = function(term) {
     return mock.countries;
 }
 
-exports.requestCities = function(config, country) {
+exports.requestCities = function(term, country) {
     return mock.cities;
 }
 
-exports.addEntrytoDB = function(config, entry) {
-    window.alert("Totally inserted something right now.");
+exports.addEntrytoDB = function(entry) {
+    console.log("Totally inserted something right now.");
+    console.log("inserted:");
+    console.log(entry);
+    return true;
 }
+
+exports.submissionCheck = function() {
+    if (Math.random() > 0.5) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+exports.submissionVerification = function(answer, id) {
+    if (Math.random() > 0.5) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+exports.getCaptcha = function() {
+    var captcha = {
+        id: 0,
+        url: "http://joshpoehlein.com/Pages/Projects/Captcha2/Images/CaptchaText.jpg"
+    }
+
+    return captcha;
+}
+

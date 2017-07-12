@@ -2,48 +2,56 @@ var utilities = require ("./utilities");
 var validations = require ("./validations");
 var templates = require ("./templates");
 var api = require ("./api");
+var config = require ("./config");
+var captchas = require ("./captchas");
 
-var entries = [];
 $(document).ready(function() {
     try {
         book = api.requestBookContent();
         $(".page-title").text(book.title);
         $(".title-text").text(book.description);
         book.entries.forEach(utilities.loadMainPageEntry);
-
-        entries = book.entries;
     } catch(err) {
         console.log(err);
         utilities.crash(0);
     }
 });
 
-
-$(".div-input-button").on('click', function() {
-
+function submissionHandler() {
     entry = utilities.getSubmissionContent();
 
     $(".form-entry").children().removeClass("input-error");
 
-    if (validations.entry(entry)) {
-        api.addEntrytoDB(entry);
-        location.reload(); //Reload content to view input
-    }
+    if (api.submissionCheck()) {
+        if (validations.entry(entry) 
+            && api.addEntrytoDB(entry)) {
+                utilities
+                .animate_popup
+                (templates.submit_popup(
+                    config.submit_popup
+                ));
 
-}); 
+        }
+    } else {
+        captchas.enableCaptcha()
+    }
+}
+
+$("#input-button").click(function() {submissionHandler()}); 
 
 $(".div-right-button").on('click', function(){
     $(".div-entries").fadeOut(200);
-    $(".div-entries").css("width", "0%");
+    $(".div-right-button").fadeOut(200);
 
     $(".div-entry-input").fadeIn(200);
-    $(".div-entry-input").css("width", "100%");
 })
 
 $(".div-left-button").on('click', function() {
     $(".div-entry-input").fadeOut(200);
-    $(".div-entries").css("width", "100%");
-    $(".div-entries").fadeIn(200)
+
+    $(".div-entries").fadeIn(200);
+    $(".div-right-button").fadeIn(200);
+    $("#popup").fadeOut(100);
 })
 
 
@@ -66,7 +74,9 @@ $(".div-entries").on('scroll', function() {
     }
 })
 
-
+module.exports = {
+    submissionHandler:submissionHandler
+}
 
 
 
