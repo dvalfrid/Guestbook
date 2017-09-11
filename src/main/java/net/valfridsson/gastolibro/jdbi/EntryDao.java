@@ -20,35 +20,32 @@ import java.util.Optional;
 @RegisterMapper(EntryDao.EntryMapper.class)
 public abstract class EntryDao implements GetHandle {
 
-    @SqlQuery("SELECT * FROM entry e WHERE e.book_id = :bookId ORDER BY e.create_time DESC")
-    public abstract ImmutableList<Entry> findAll(@Bind("bookId") long bookId);
+    @SqlQuery("SELECT * FROM entry e ORDER BY e.time DESC")
+    abstract ImmutableList<Entry> findAll();
 
 
-    @SqlQuery("SELECT * FROM entry e where e.book_id = :bookId AND e.id > :after ORDER BY e.create_time DESC limit :limit ")
-    public abstract ImmutableList<Entry> findX(@Bind("bookId") long bookId,
-                                               @Bind("limit") long limit,
-                                               @Bind("after") long from);
+    @SqlQuery("SELECT * FROM entry e where e.id > :from ORDER BY e.time DESC limit :limit ")
+    public abstract ImmutableList<Entry> findX(@Bind("limit") long limit,
+                                               @Bind("from") long from);
 
     @SingleValueResult
     @SqlQuery("SELECT * FROM entry e WHERE e.book_id = :bookId AND e.id = :entryId")
     public abstract Optional<Entry> findBy(@Bind("bookId") long bookId,
                                            @Bind("entryId") long entryId);
 
-    public Entry insert(CreateEntry createEntry, long bookId, String ip) {
+    public Entry insert(CreateEntry createEntry) {
         return getHandle().inTransaction((conn, status) -> {
             long id = nextId();
             doInsert(Entry.newBuilder()
                 .id(id)
                 .name(createEntry.name)
-                .message(createEntry.message)
+                .message(createEntry.text)
                 .city(createEntry.city)
                 .country(createEntry.country)
                 .email(createEntry.email)
-                .headline(createEntry.headline)
-                .ip(ip)
-                .viewAble(true)
-                .createTime(LocalDateTime.now())
-                .build(), bookId);
+                .headline(createEntry.title)
+                .time(LocalDateTime.now())
+                .build());
             return findById(id).orElse(null);
         });
     }
@@ -60,9 +57,9 @@ public abstract class EntryDao implements GetHandle {
     @SqlQuery("SELECT * FROM entry WHERE id = :id")
     abstract Optional<Entry> findById(@Bind("id") long id);
 
-    @SqlUpdate("INSERT INTO entry (id,name,ip,headline,email,city,country,message,create_time,view_able,book_id) " +
-        "values (:e.id,:e.name,:e.ip,:e.headline,:e.email,:e.city,:e.country,:e.message,:e.createTime,:e.viewAble,:bookId)")
-    abstract void doInsert(@BindFields("e") Entry entry, @Bind("bookId") long bookId);
+    @SqlUpdate("INSERT INTO entry (id,name,title,email,city,country,text,time) " +
+        "values (:e.id,:e.name,:e.title,:e.email,:e.city,:e.country,:e.text,:e.time)")
+    abstract void doInsert(@BindFields("e") Entry entry);
 
     public static class EntryMapper implements ResultSetMapper<Entry> {
 
@@ -71,14 +68,12 @@ public abstract class EntryDao implements GetHandle {
             return Entry.newBuilder()
                 .id(rs.getLong("id"))
                 .name(rs.getString("name"))
-                .ip(rs.getString("ip"))
-                .headline(rs.getString("headline"))
+                .headline(rs.getString("title"))
                 .email(rs.getString("email"))
                 .city(rs.getString("city"))
                 .country(rs.getString("country"))
-                .message(rs.getString("message"))
-                .createTime(rs.getTimestamp("create_time").toLocalDateTime())
-                .viewAble(rs.getBoolean("view_able"))
+                .message(rs.getString("text"))
+                .time(rs.getTimestamp("time").toLocalDateTime())
                 .build();
         }
     }

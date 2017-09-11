@@ -6,29 +6,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="001-createBookTable" author="dvalfrid">
-        <createSequence sequenceName="book_sequence" startValue="100"/>
 
-        <createTable tableName="book">
-            <column name="id" type="number">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="create_time" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-            <column name="view_able" type="boolean">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey tableName="book" columnNames="id"/>
-
-    </changeSet>
-
-    <changeSet id="002-createEntryTable" author="dvalfrid">
+    <changeSet id="001-createEntryTable" author="dvalfrid">
         <createSequence sequenceName="entry_sequence" startValue="10"/>
 
         <createTable tableName="entry">
@@ -38,10 +17,10 @@
             <column name="name" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="headline" type="varchar">
+            <column name="title" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="message" type="clob">
+            <column name="text" type="clob">
                 <constraints nullable="false"/>
             </column>
             <column name="city" type="varchar">
@@ -53,16 +32,7 @@
             <column name="email" type="varchar">
                 <constraints nullable="false"/>
             </column>
-            <column name="ip" type="varchar">
-                <constraints nullable="false"/>
-            </column>
-            <column name="create_time" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-            <column name="view_able" type="boolean">
-                <constraints nullable="false"/>
-            </column>
-            <column name="book_id" type="number">
+            <column name="time" type="timestamp">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -70,42 +40,30 @@
         <addPrimaryKey tableName="entry" columnNames="id"/>
 
         <createIndex tableName="entry" indexName="entry_create_time_index">
-            <column name="create_time"/>
+            <column name="time"/>
         </createIndex>
     </changeSet>
 
     <changeSet id="003-adding-test-book" author="dvalfrid">
-        <insert tableName="book">
-            <column name="id" value="10" />
-            <column name="name" value="Test Book"/>
-            <column name="view_able" value="true"/>
-            <column name="create_time" value="now()"/>
-        </insert>
         <insert tableName="entry">
             <column name="id" value="1"/>
             <column name="name" value="Kalle Pettersson"/>
-            <column name="headline" value="Första test"/>
-            <column name="message" value="Nu testar vi för första gången"/>
+            <column name="title" value="Första test"/>
+            <column name="text" value="Nu testar vi för första gången"/>
             <column name="city" value="Stockholm"/>
             <column name="country" value="Sverige"/>
             <column name="email" value="kalle@pettersson.se"/>
-            <column name="ip" value="127.0.0.1"/>
-            <column name="create_time" value="now()"/>
-            <column name="view_able" value="true"/>
-            <column name="book_id" value="10"/>
+            <column name="time" value="now()"/>
         </insert>
         <insert tableName="entry">
             <column name="id" value="2"/>
             <column name="name" value="Kalle Pettersson"/>
-            <column name="headline" value="Andra test"/>
-            <column name="message" value="Nu testar vi för andra gången"/>
+            <column name="title" value="Andra test"/>
+            <column name="text" value="Nu testar vi för andra gången"/>
             <column name="city" value="Stockholm"/>
             <column name="country" value="Sverige"/>
             <column name="email" value="kalle@pettersson.se"/>
-            <column name="ip" value="127.0.0.1"/>
-            <column name="create_time" value="now()"/>
-            <column name="view_able" value="true"/>
-            <column name="book_id" value="10"/>
+            <column name="time" value="now()"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

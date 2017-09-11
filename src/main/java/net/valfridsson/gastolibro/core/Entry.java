@@ -1,6 +1,5 @@
 package net.valfridsson.gastolibro.core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -8,44 +7,50 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDateTime;
 
+/**
+ * <pre>
+ *   {
+ *     id: Int,
+ *     title: String,
+ *     text: String,
+ *     time: String, YY/MM/DD
+ *     name: String,
+ *     email: String,
+ *     country: String,
+ *     city: String
+ *   }
+ * </pre>
+ */
+
 @SuppressWarnings("WeakerAccess")
 public class Entry {
     @JsonProperty("id")
     public final long id;
+    @JsonProperty("title")
+    public final String title;
+    @JsonProperty("text")
+    public final String text;
+    @JsonProperty("time")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    public final LocalDateTime time;
     @JsonProperty("name")
     public final String name;
-    @JsonProperty("ip")
-    public final String ip;
-    @JsonProperty("header")
-    public final String headline;
     @JsonProperty("email")
     public final String email;
-    @JsonProperty("city")
-    public final String city;
     @JsonProperty("country")
     public final String country;
-    @JsonProperty("message")
-    public final String message;
-    @JsonProperty("date")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    public final LocalDateTime createTime;
-    @JsonProperty("comment")
-    public final String comment;
-    @JsonIgnore
-    public final boolean viewAble;
+    @JsonProperty("city")
+    public final String city;
 
     private Entry(Builder builder) {
         this.id = builder.id;
+        this.title = builder.headline;
+        this.text = builder.text;
+        this.time = builder.createTime;
         this.name = builder.name;
-        this.ip = builder.ip;
-        this.headline = builder.headline;
         this.email = builder.email;
-        this.city = builder.city;
         this.country = builder.country;
-        this.message = builder.message;
-        this.createTime = builder.createTime;
-        this.viewAble = builder.viewAble;
-        this.comment = builder.comment;
+        this.city = builder.city;
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
@@ -66,15 +71,12 @@ public class Entry {
     public static class Builder {
         private long id;
         private String name;
-        private String ip;
         private String headline;
         private String email;
         private String city;
         private String country;
-        private String message;
+        private String text;
         private LocalDateTime createTime;
-        private String comment;
-        private boolean viewAble;
 
         public Builder id(long id) {
             this.id = id;
@@ -83,11 +85,6 @@ public class Entry {
 
         public Builder name(String name) {
             this.name = name;
-            return this;
-        }
-
-        public Builder ip(String ip) {
-            this.ip = ip;
             return this;
         }
 
@@ -112,22 +109,12 @@ public class Entry {
         }
 
         public Builder message(String msg) {
-            this.message = msg;
+            this.text = msg;
             return this;
         }
 
-        public Builder createTime(LocalDateTime createTime) {
+        public Builder time(LocalDateTime createTime) {
             this.createTime = createTime;
-            return this;
-        }
-
-        public Builder viewAble(boolean viewAble) {
-            this.viewAble = viewAble;
-            return this;
-        }
-
-        public Builder comment(String comment) {
-            this.comment = comment;
             return this;
         }
 

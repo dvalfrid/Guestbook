@@ -21,7 +21,7 @@ public interface HandleException<A> {
             LOGGER.error(e.getMessage(), e);
             return Response.serverError().entity(ImmutableMap.of(
                 "type", "error",
-                "message", e.getMessage())).build();
+                "text", e.getMessage())).build();
         }
     }
 }

@@ -13,6 +13,8 @@ MOST-RECENT-ENTRY = 0 if no entry have been recieved.
 
 Json Structure of Entry
 
+
+``
 {
   id: Int,
   title: String,
@@ -23,7 +25,7 @@ Json Structure of Entry
   country: String,
   city: String
 }
-
+``
 
 
 post /entries         -> One Entry
