@@ -41,7 +41,8 @@ public class CreateEntry {
                        @JsonProperty("name") String name,
                        @JsonProperty("email") String email,
                        @JsonProperty("city") String city,
-                       @JsonProperty("country") String country) {
+                       @JsonProperty("country") String country,
+                       @JsonProperty("time") String time) {
         this.name = name;
         this.title = title;
         this.email = email;
