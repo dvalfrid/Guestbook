@@ -58,6 +58,6 @@ public class EntryDaoTest {
     }
 
     private static CreateEntry getCreateEntry() {
-        return new CreateEntry("title", "text", "name", "name@mail.com", "city", "country");
+        return new CreateEntry("title", "text", "name", "name@mail.com", "city", "country", "");
     }
 }
