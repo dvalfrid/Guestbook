@@ -300,6 +300,7 @@ body {
     padding: 20px;
     font-family: 'Raleway', sans-serif;
     overflow: scroll;
+    height: 70%;
 }
 
 .modal_location {
