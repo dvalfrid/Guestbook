@@ -299,6 +299,7 @@ body {
     color: white;
     padding: 20px;
     font-family: 'Raleway', sans-serif;
+    overflow: scroll;
 }
 
 .modal_location {
