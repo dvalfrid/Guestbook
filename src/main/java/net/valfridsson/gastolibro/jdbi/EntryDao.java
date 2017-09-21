@@ -24,7 +24,7 @@ public abstract class EntryDao implements GetHandle {
     abstract ImmutableList<Entry> findAll();
 
 
-    @SqlQuery("SELECT * FROM entry e where e.id > :from ORDER BY e.time DESC limit :limit ")
+    @SqlQuery("SELECT * FROM entry e where e.id < :from ORDER BY e.time DESC limit :limit ")
     public abstract ImmutableList<Entry> findX(@Bind("limit") long limit,
                                                @Bind("from") long from);
 
