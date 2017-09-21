@@ -42,7 +42,7 @@ public class EntryResource {
                                @QueryParam("id") Optional<LongParam> id) {
         return Response.ok(application.getDbi().onDemand(EntryDao.class)
                         .findX(numberOfEntries.map(LongParam::get).orElse(10L),
-                                id.map(LongParam::get).orElse(0L))).build();
+                                id.map(LongParam::get).orElse(Long.MAX_VALUE))).build();
     }
 
 }
